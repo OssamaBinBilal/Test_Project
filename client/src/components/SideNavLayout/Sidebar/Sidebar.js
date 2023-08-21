@@ -39,27 +39,28 @@ function ResponsiveDrawer(props) {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              mt: 3,
             }}
           >
             {items.map((itemLevel1) => (
               <Link
                 style={{
-                  width: "85%",
-                  textTransform: "capitalize",
-                  mx: "auto",
+                  width: "90%",
                 }}
                 to={itemLevel1.to}
               >
                 <Button
                   sx={{
                     width: "100%",
+                    my: 0.2,
                   }}
                   color="customGrey"
                 >
                   {itemLevel1.icon}
                   <ListItemText
                     sx={{
-                      ml: -5,
+                      textAlign: "left",
+                      ml: 2,
                       display: sideBarExtended ? "inline" : "none",
                     }}
                     primary={itemLevel1.items ? "extended" : itemLevel1.name}

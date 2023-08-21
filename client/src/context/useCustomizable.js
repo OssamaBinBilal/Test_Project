@@ -6,18 +6,19 @@ const CustomizableContext = createContext();
 const CustomizableProvider = ({ children }) => {
   const theme = useTheme();
 
-  //customizable data
-  const loginHeading = "Enter RT-9";
-  const loginSubHeading = "We're glad to see you come back!";
+  //The values in pairs should remain the same
   const primaryBackground = "white";
+  const primaryBackgroundMain = theme.palette.white.main;
+
   const secondaryBackground = "lightGrey";
+  const secondaryBackgroundMain = theme.palette.lightGrey.main;
+
   const scrollbarColor = "darkGrey";
+  const scrollbarColorMain = theme.palette.darkGrey.main;
+
   const navbarHeight = 60;
   const collapsedSidebarWidth = 80;
   const extendedSidebarWidth = 240;
-  const primaryBackgroundMain = theme.palette.white.main;
-  const secondaryBackgroundMain = theme.palette.lightGrey.main;
-  const scrollbarColorMain = theme.palette.darkGrey.main;
 
   const [drawerWidth, setDrawerWidth] = useState(extendedSidebarWidth);
   const [sideBarExtended, setSidebarExtended] = useState(true);
@@ -32,8 +33,6 @@ const CustomizableProvider = ({ children }) => {
   };
 
   const contextValue = {
-    loginHeading,
-    loginSubHeading,
     primaryBackground,
     primaryBackgroundMain,
     secondaryBackground,
