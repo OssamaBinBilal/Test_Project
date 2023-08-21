@@ -1,7 +1,23 @@
 import { Box, useTheme } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import { useCustomizable } from "../../../context/useCustomizable";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const PageLoading = () => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress variant="indeterminate" thickness={3} />
+    </Box>
+  );
+};
 
 const Mainbar = (props) => {
   const {
@@ -11,6 +27,8 @@ const Mainbar = (props) => {
     secondaryBackgroundMain,
     scrollbarColorMain,
   } = useCustomizable();
+
+  const [loading, setLoading] = useState(true);
 
   return (
     <Box>
@@ -44,7 +62,7 @@ const Mainbar = (props) => {
             },
           }}
         >
-          {props.children}
+          {!loading ? props.children : <PageLoading />}
         </Box>
       </Box>
     </Box>
