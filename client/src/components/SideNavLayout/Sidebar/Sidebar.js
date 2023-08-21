@@ -21,8 +21,8 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <Box>
-      {adminSidebarItems.map(({ heading, items }) => (
-        <Box>
+      {adminSidebarItems.map(({ heading, items }, index) => (
+        <Box key={index}>
           <Typography
             variant="p"
             sx={{
@@ -42,8 +42,9 @@ function ResponsiveDrawer(props) {
               mt: 3,
             }}
           >
-            {items.map((itemLevel1) => (
+            {items.map((itemLevel1, index) => (
               <Link
+                key={index}
                 style={{
                   width: "90%",
                 }}
