@@ -26,7 +26,7 @@ const CustomizableProvider = ({ children }) => {
   const toggleSidebar = () => {
     setSidebarExtended((prev) => !prev);
     setDrawerWidth(
-      drawerWidth == collapsedSidebarWidth
+      drawerWidth === collapsedSidebarWidth
         ? extendedSidebarWidth
         : collapsedSidebarWidth
     );
