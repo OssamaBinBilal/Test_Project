@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const kekw = require("./routes/kekw");
 const createDatabase = require("./scripts/createDatabase");
 
 const { faker } = require("@faker-js/faker");
@@ -10,8 +9,6 @@ const { faker } = require("@faker-js/faker");
 // });
 
 app.use(express.json());
-
-app.use("/kekw", kekw);
 
 const PORT = 4000;
 app.listen(PORT, () => {
