@@ -8,7 +8,6 @@ const Student = require("../models/student");
 const Solution = require("../models/solution");
 const TextANswer = require("../models/textAnswer");
 const MCQAnswer = require("../models/mcqAnswer");
-
 const sequelize = require("../database/database");
 
 const initializeDatabase = async () => {
@@ -18,5 +17,13 @@ const initializeDatabase = async () => {
     console.log(e);
   }
 };
+
+initializeDatabase()
+  .then(() => {
+    console.log("Database created");
+  })
+  .catch((e) => {
+    console.log("Error creating database \n", e);
+  });
 
 module.exports = initializeDatabase;
