@@ -42,8 +42,8 @@ async function getPaginatedTeachers(req, res) {
       offset: (page - 1) * pageSize,
       limit: pageSize,
     });
-
-    res.status(200).json({ teachers });
+    const total_teachers = await Teacher.count();
+    res.status(200).json({ teachers, total_teachers });
   } catch (error) {
     console.error("Error fetching paginated teachers for admin:", error);
     res.status(500).json({ error: "Internal server error" });
