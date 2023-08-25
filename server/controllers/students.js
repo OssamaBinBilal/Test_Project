@@ -41,7 +41,8 @@ async function getPaginatedStudents(req, res) {
       offset: (page - 1) * pageSize,
       limit: pageSize,
     });
-    res.status(200).json({ students });
+    const total_students = await Student.count();
+    res.status(200).json({ students, total_students });
   } catch (error) {
     console.error("Error fetching paginated students:", error);
     res.status(500).json({ error: "Internal server error" });
