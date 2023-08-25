@@ -1,15 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAdmin,
-  postAdmin,
-  putAdmin,
-  deleteAdmin,
-} = require("../controllers/admin");
+  createStudent,
+  getPaginatedStudents,
+} = require("../controllers/students");
+const {
+  createTeacher,
+  getPaginatedTeachers,
+} = require("../controllers/teachers");
 
-router.get("/", getAdmin);
-router.post("/", postAdmin);
-router.put("/", putAdmin);
-router.delete("/", deleteAdmin);
+router.post("/create-student", createStudent);
+router.post("/create-teacher", createTeacher);
+router.get("/get-students", getPaginatedStudents);
+router.get("/get-teachers", getPaginatedTeachers);
+
+// router.post("/", postAdmin);
+// router.put("/", putAdmin);
+// router.delete("/", deleteAdmin);
 
 module.exports = router;
