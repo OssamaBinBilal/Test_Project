@@ -33,6 +33,24 @@ async function createTeacher(req, res) {
   }
 }
 
+async function getPaginatedTeachers(req, res) {
+  const page = req.query.page || 1;
+  const pageSize = 10;
+
+  try {
+    const teachers = await Teacher.findAll({
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
+    });
+
+    res.status(200).json({ teachers });
+  } catch (error) {
+    console.error("Error fetching paginated teachers for admin:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 module.exports = {
   createTeacher,
+  getPaginatedTeachers,
 };

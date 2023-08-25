@@ -4,11 +4,15 @@ const {
   createStudent,
   getPaginatedStudents,
 } = require("../controllers/students");
-const { createTeacher } = require("../controllers/teachers");
+const {
+  createTeacher,
+  getPaginatedTeachers,
+} = require("../controllers/teachers");
 
 router.post("/create-student", createStudent);
 router.post("/create-teacher", createTeacher);
 router.get("/get-students", getPaginatedStudents);
+router.get("/get-teachers", getPaginatedTeachers);
 
 // router.post("/", postAdmin);
 // router.put("/", putAdmin);
