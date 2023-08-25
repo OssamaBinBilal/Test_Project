@@ -31,3 +31,18 @@ export const getTeachers = async (page, pageSize) => {
     throw e;
   }
 };
+
+export const getExams = async (page, pageSize) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/get-all-exams?page=${page}&perPage=${pageSize}`,
+      headers: {},
+    };
+    const response = await axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
