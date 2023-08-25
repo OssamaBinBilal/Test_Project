@@ -36,13 +36,11 @@ async function createStudent(req, res) {
 async function getPaginatedStudents(req, res) {
   const page = req.query.page || 1;
   const pageSize = 10;
-
   try {
     const students = await Student.findAll({
       offset: (page - 1) * pageSize,
       limit: pageSize,
     });
-
     res.status(200).json({ students });
   } catch (error) {
     console.error("Error fetching paginated students:", error);

@@ -1,8 +1,7 @@
 const _columns = [
-  { field: "firstname", headerName: "Firstname", width: 150 },
-  { field: "lastname", headerName: "Lastname", width: 150 },
-  { field: "username", headerName: "Username", width: 150 },
-  { field: "email", headerName: "Email", width: 150 },
+  { field: "first_name", headerName: "Firstname", width: 150 },
+  { field: "last_name", headerName: "Lastname", width: 150 },
+  { field: "email", headerName: "Email", width: 350 },
 ];
 
 export default _columns;
