@@ -23,8 +23,18 @@ async function getPaginatedActiveExams(req, res) {
       offset: (page - 1) * perPage,
       limit: perPage,
     });
-
-    res.json(exams);
+    const total_exams = await Exam.count({
+      where: {
+        status: "approved",
+        start_time: {
+          [Op.lte]: currentDate,
+        },
+        end_time: {
+          [Op.gte]: currentDate,
+        },
+      },
+    });
+    res.json({ exams, total_exams });
   } catch (error) {
     console.error("Error retrieving paginated approved exams:", error);
     res.status(500).json({ error: "Internal server error" });

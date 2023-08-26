@@ -14,6 +14,9 @@ import { CustomizableProvider } from "./context/useCustomizable";
 import { adminSidebarItems } from "./components/SideNavLayout/adminSidebarLinks";
 import { teacherSidebarItems } from "./components/SideNavLayout/teacherSidebarLinks";
 import CreateExam from "./pages/teacherPages/CreateExam";
+import { studentSidebarItems } from "./components/SideNavLayout/studentSidebarLinks";
+import StudentDashboard from "./pages/studentPages/Dashboard";
+import StudentExams from "./pages/studentPages/Exams";
 
 function App() {
   return (
@@ -95,6 +98,24 @@ function App() {
               />
               <Route path="questionnaires" element={<>Questionnaires</>} />
               <Route path="solutions" element={<>Questionnaires</>} />
+            </Route>
+            <Route path="/student">
+              <Route
+                path=""
+                element={
+                  <SideNavLayout sidebarItems={studentSidebarItems}>
+                    <StudentDashboard />
+                  </SideNavLayout>
+                }
+              />
+              <Route
+                path="exams"
+                element={
+                  <SideNavLayout sidebarItems={studentSidebarItems}>
+                    <StudentExams />
+                  </SideNavLayout>
+                }
+              />
             </Route>
             <Route path="*" element={<>LMFAO INVALIUD ROUTE</>} />
           </Routes>
