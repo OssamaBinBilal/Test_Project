@@ -2,11 +2,11 @@ import React from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const MCQ = ({ passedKey, mcq, handleRadioChange }) => {
   return (
-    <div key={passedKey}>
+    <Box key={passedKey} sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         {`${passedKey}. ${mcq.questionText}`} delete lmao
       </Typography>
@@ -23,7 +23,7 @@ const MCQ = ({ passedKey, mcq, handleRadioChange }) => {
           />
         ))}
       </RadioGroup>
-    </div>
+    </Box>
   );
 };
 
