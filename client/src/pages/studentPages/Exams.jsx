@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import _columns from "../../handlers/_examColumns";
-import { getExams } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
+import { getActiveExams } from "../../apis/student/student";
 
 const ExamsList = () => {
   const [exams, setExams] = useState([]);
@@ -17,7 +17,7 @@ const ExamsList = () => {
   };
 
   useEffect(() => {
-    getExams(currentPage, itemsPerPage)
+    getActiveExams(currentPage, itemsPerPage)
       .then((response) => {
         setExams(response.data.exams);
         setTotalItems(response.data.total_exams);
