@@ -103,8 +103,38 @@ async function createExamWithQuestions(req, res) {
   }
 }
 
+async function updateExamStatus(req, res) {
+  const { id, status } = req.body;
+
+  try {
+    const exam = await Exam.findByPk(id);
+
+    if (!exam) {
+      return res
+        .status(404)
+        .json({ error: "There exists no exam with the given id" });
+    }
+
+    await exam.update({ status });
+
+    return res
+      .status(200)
+      .json({ message: "Exam status updated successfully" });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while updating the exam status" });
+  }
+}
+
+module.exports = {
+  updateExamStatus,
+};
+
 module.exports = {
   getPaginatedActiveExams,
   createExamWithQuestions,
   getPaginatedExams,
+  updateExamStatus,
 };

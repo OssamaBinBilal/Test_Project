@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import _columns from "../../handlers/_examColumns";
 import { getExams } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
+import useExamColumns from "../../handlers/_examColumns";
 
 const ExamsList = () => {
   const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
 
-  const itemsPerPage = 10;
-
-  const handlePageChange = (e, newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  useEffect(() => {
+  const retrieveExams = () => {
     getExams(currentPage, itemsPerPage)
       .then((response) => {
         setExams(response.data.exams);
@@ -25,6 +19,18 @@ const ExamsList = () => {
       .catch((e) => {
         console.log(e.response.data.error);
       });
+  };
+
+  const _columns = useExamColumns(retrieveExams);
+
+  const itemsPerPage = 10;
+
+  const handlePageChange = (e, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  useEffect(() => {
+    retrieveExams();
   }, [currentPage]);
 
   return (
@@ -36,6 +42,7 @@ const ExamsList = () => {
           rows={exams}
           columns={[..._columns]}
           hideFooter
+          disableColumnMenu
         />
       </Box>
       <Pagination

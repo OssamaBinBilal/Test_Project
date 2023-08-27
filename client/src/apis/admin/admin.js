@@ -47,7 +47,7 @@ export const getExams = async (page, pageSize) => {
   }
 };
 
-export const createStudent = (firstName, lastName, email, password) => {
+export const createStudent = async (firstName, lastName, email, password) => {
   try {
     let data = JSON.stringify({
       firstName,
@@ -66,14 +66,14 @@ export const createStudent = (firstName, lastName, email, password) => {
       data: data,
     };
 
-    const response = axios.request(config);
+    const response = await axios.request(config);
     return response;
   } catch (e) {
     throw e;
   }
 };
 
-export const createTeacher = (firstName, lastName, email, password) => {
+export const createTeacher = async (firstName, lastName, email, password) => {
   try {
     let data = JSON.stringify({
       firstName,
@@ -86,6 +86,30 @@ export const createTeacher = (firstName, lastName, email, password) => {
       method: "post",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/admin/create-teacher`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    const response = await axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const updateExamStatus = async (id, status) => {
+  try {
+    let data = JSON.stringify({
+      id,
+      status,
+    });
+
+    let config = {
+      method: "put",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/update-exam-status`,
       headers: {
         "Content-Type": "application/json",
       },
