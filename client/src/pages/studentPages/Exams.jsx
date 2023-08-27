@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import _columns from "../../handlers/_studentColumns";
-import { getStudents } from "../../apis/admin/admin";
+import _columns from "../../handlers/_examColumns";
 import Pagination from "../../components/Pagination/Pagination";
+import { getActiveExams } from "../../apis/student/student";
 
-const StudentList = () => {
-  const [students, setStudents] = useState([]);
+const ExamsList = () => {
+  const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
 
@@ -17,10 +17,10 @@ const StudentList = () => {
   };
 
   useEffect(() => {
-    getStudents(currentPage, itemsPerPage)
+    getActiveExams(currentPage, itemsPerPage)
       .then((response) => {
-        setStudents(response.data.students);
-        setTotalItems(response.data.total_students);
+        setExams(response.data.exams);
+        setTotalItems(response.data.total_exams);
       })
       .catch((e) => {
         console.log(e.response.data.error);
@@ -33,7 +33,7 @@ const StudentList = () => {
         <DataGrid
           sx={{ border: "none" }}
           rowHeight={75}
-          rows={students}
+          rows={exams}
           columns={[..._columns]}
           hideFooter
         />
@@ -48,4 +48,4 @@ const StudentList = () => {
   );
 };
 
-export default StudentList;
+export default ExamsList;

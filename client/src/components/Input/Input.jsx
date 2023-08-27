@@ -9,6 +9,7 @@ const Input = ({
   label = "",
   helperText = "",
   sx,
+  handleKeyDown = () => {},
 }) => {
   return (
     <TextField
@@ -20,6 +21,7 @@ const Input = ({
       helperText={helperText}
       sx={sx}
       variant="standard"
+      onKeyDown={handleKeyDown}
     />
   );
 };

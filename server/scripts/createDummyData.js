@@ -3,6 +3,7 @@ const Student = require("../models/student");
 const Teacher = require("../models/teacher");
 const Admin = require("../models/admin");
 const Exam = require("../models/exam");
+const bcrypt = require("bcrypt");
 
 const student_count = 100;
 const teacher_count = 100;
@@ -20,12 +21,13 @@ async function generateFakeStudents(count) {
       firstName,
       lastName,
     ]);
+    const hashedPassword = await bcrypt.hash("student1234", 10);
 
     await Student.create({
       first_name: firstName,
       last_name: lastName,
       email: email,
-      password: "student1234",
+      password: hashedPassword,
     });
   }
 }
@@ -41,12 +43,13 @@ async function generateFakeTeachers(count) {
       firstName,
       lastName,
     ]);
+    const hashedPassword = await bcrypt.hash("teacher1234", 10);
 
     await Teacher.create({
       first_name: firstName,
       last_name: lastName,
       email: email,
-      password: "teacher1234",
+      password: hashedPassword,
     });
   }
 }
@@ -62,12 +65,13 @@ async function generateFakeAdmins(count) {
       firstName,
       lastName,
     ]);
+    const hashedPassword = await bcrypt.hash("admin1234", 10);
 
     await Admin.create({
       first_name: firstName,
       last_name: lastName,
       email: email,
-      password: "admin1234",
+      password: hashedPassword,
     });
   }
 }
