@@ -16,8 +16,4 @@ router.get("/get-students", getPaginatedStudents);
 router.get("/get-teachers", getPaginatedTeachers);
 router.get("/get-all-exams", getPaginatedExams);
 
-// router.post("/", postAdmin);
-// router.put("/", putAdmin);
-// router.delete("/", deleteAdmin);
-
 module.exports = router;

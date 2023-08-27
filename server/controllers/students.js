@@ -6,8 +6,9 @@ async function createStudent(req, res) {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(req.body);
 
+    const hashedPassword = await bcrypt.hash(password, 10);
     const createdStudent = await Student.create({
       first_name: firstName,
       last_name: lastName,

@@ -46,3 +46,29 @@ export const getExams = async (page, pageSize) => {
     throw e;
   }
 };
+
+export const createStudent = (firstName, lastName, email, password) => {
+  try {
+    let data = JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/create-student`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
