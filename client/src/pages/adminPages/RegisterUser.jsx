@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Input from "../../components/Input/Input";
 import Switch from "../../components/Switch/Switch";
 import { Button } from "@mui/material";
-import { createStudent } from "../../apis/admin/admin";
+import { createStudent, createTeacher } from "../../apis/admin/admin";
 
 const RegisterUser = () => {
   const type1 = "Teacher";
@@ -50,6 +50,10 @@ const RegisterUser = () => {
 
     if (type === "Student") {
       createStudent(firstname, lastname, email, password)
+        .then((response) => console.log(response))
+        .catch((e) => console.log(e));
+    } else {
+      createTeacher(firstname, lastname, email, password)
         .then((response) => console.log(response))
         .catch((e) => console.log(e));
     }

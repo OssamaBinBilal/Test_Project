@@ -72,3 +72,29 @@ export const createStudent = (firstName, lastName, email, password) => {
     throw e;
   }
 };
+
+export const createTeacher = (firstName, lastName, email, password) => {
+  try {
+    let data = JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/create-teacher`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
