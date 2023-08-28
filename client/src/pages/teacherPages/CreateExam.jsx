@@ -65,8 +65,18 @@ const CreateExam = () => {
     setCurrentMCQs([...currentMCQs, mcq]);
   };
 
+  const removeMCQ = (mcq) => {
+    setCurrentMCQs(currentMCQs.filter((item) => item.id !== mcq.id));
+  };
+
   const addQuestion = (question) => {
     setCurrentTextQuestions([...currentTextQuestions, question]);
+  };
+
+  const removeQuestion = (question) => {
+    setCurrentTextQuestions(
+      currentTextQuestions.filter((item) => item.id !== question.id)
+    );
   };
 
   return (
@@ -94,6 +104,7 @@ const CreateExam = () => {
             key={index + 1}
             passedKey={index + 1}
             mcq={mcq}
+            removeMCQ={removeMCQ}
             handleRadioChange={updateCorrectAnswer}
           />
         ))}
@@ -102,6 +113,7 @@ const CreateExam = () => {
             key={index + 1}
             passedKey={currentMCQs.length + index + 1}
             question={question}
+            removeQuestion={removeQuestion}
           />
         ))}
       </Box>

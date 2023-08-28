@@ -1,10 +1,14 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TimerIcon from "@mui/icons-material/Timer";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { updateExamStatus } from "../apis/admin/admin";
+import { Link } from "react-router-dom";
 
-const useExamColumns = (retrieveExams) => {
+const useExamColumns = (
+  displayUpdateStatusColumn,
+  retrieveExams = () => {}
+) => {
   const getColorFromStatus = (status) => {
     if (status === "approved") return "success";
     else if (status === "rejected") return "error";
@@ -20,7 +24,7 @@ const useExamColumns = (retrieveExams) => {
       .catch((e) => console.log(e));
   };
 
-  return [
+  const staticColumns = [
     {
       field: "creator_id",
       headerName: "Teacher / Creator",
@@ -60,30 +64,58 @@ const useExamColumns = (retrieveExams) => {
       width: 210,
       sortable: false,
     },
-    {
-      field: "updateStatus",
-      headerName: "Update Status",
-      width: 200,
-      sortable: false,
-      renderCell: (params) => (
-        <>
-          <CheckCircleIcon
-            color="success"
-            onClick={() => handleStatusUpdate(params.row.id, "approved")}
-          />
-          <CancelIcon
-            sx={{ mx: 1 }}
-            color="error"
-            onClick={() => handleStatusUpdate(params.row.id, "rejected")}
-          />
-          <TimerIcon
-            color="info"
-            onClick={() => handleStatusUpdate(params.row.id, "pending")}
-          />
-        </>
-      ),
-    },
   ];
+
+  const updateStatusColumn = {
+    field: "updateStatus",
+    headerName: "Update Status",
+    width: 200,
+    sortable: false,
+    renderCell: (params) => (
+      <>
+        <CheckCircleIcon
+          color="success"
+          onClick={() => handleStatusUpdate(params.row.id, "approved")}
+        />
+        <CancelIcon
+          sx={{ mx: 1 }}
+          color="error"
+          onClick={() => handleStatusUpdate(params.row.id, "rejected")}
+        />
+        <TimerIcon
+          color="info"
+          onClick={() => handleStatusUpdate(params.row.id, "pending")}
+        />
+      </>
+    ),
+  };
+
+  const attemptExamColumn = {
+    field: "attemptExam",
+    headerName: "Attempt Exam",
+    width: 200,
+    sortable: false,
+    renderCell: (params) => (
+      <>
+        <Button
+          sx={{ fontWeight: "bold", textTransform: "capitalize" }}
+          variant="contained"
+          onClick={() => console.log()}
+        >
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            to={`/student/attempt/exam/${params.row.id}`}
+          >
+            Attempt
+          </Link>
+        </Button>
+      </>
+    ),
+  };
+
+  return displayUpdateStatusColumn === "admin"
+    ? [...staticColumns, updateStatusColumn]
+    : [...staticColumns, attemptExamColumn];
 };
 
 export default useExamColumns;

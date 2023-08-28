@@ -3,12 +3,21 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import { Box, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
-const MCQ = ({ passedKey, mcq, handleRadioChange }) => {
+const MCQ = ({ passedKey, mcq, handleRadioChange, removeMCQ }) => {
   return (
     <Box key={passedKey} sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        {`${passedKey}. ${mcq.questionText}`} delete lmao
+        <Typography variant="span">
+          {`${passedKey}. ${mcq.questionText}`}
+          <CloseIcon
+            sx={{ color: "red" }}
+            onClick={() => {
+              removeMCQ(mcq);
+            }}
+          />
+        </Typography>
       </Typography>
       <RadioGroup
         value={mcq.correctAnswer}

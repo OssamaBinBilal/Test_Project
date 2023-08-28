@@ -21,7 +21,7 @@ const ExamsList = () => {
       });
   };
 
-  const _columns = useExamColumns(retrieveExams);
+  const _columns = useExamColumns("admin", retrieveExams);
 
   const itemsPerPage = 10;
 

@@ -82,7 +82,7 @@ async function createExamWithQuestions(req, res) {
     for (const mcq of mcqs) {
       const createdMCQ = await MCQ.create({
         exam_id: createdExam.id,
-        question_text: mcq.questionText,
+        question_statement: mcq.questionText,
         correct_answer: mcq.correctAnswer,
         max_score: mcq.maxScore,
       });
