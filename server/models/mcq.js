@@ -17,6 +17,10 @@ const MCQ = sequelize.define("MCQ", {
       key: "id",
     },
   },
+  question_statement: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   max_score: {
     type: DataTypes.INTEGER,
     allowNull: false,

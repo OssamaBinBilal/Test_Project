@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../database/database");
 const MCQ = require("./mcq");
 
-const MCQ_Options = sequelize.define("MCQ_Options", {
+const MCQOptions = sequelize.define("MCQOptions", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,10 +17,10 @@ const MCQ_Options = sequelize.define("MCQ_Options", {
       key: "id",
     },
   },
-  correct_option: {
+  option_text: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 });
 
-module.exports = MCQ_Options;
+module.exports = MCQOptions;
