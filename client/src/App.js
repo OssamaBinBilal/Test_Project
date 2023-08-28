@@ -17,6 +17,7 @@ import CreateExam from "./pages/teacherPages/CreateExam";
 import { studentSidebarItems } from "./components/SideNavLayout/studentSidebarLinks";
 import StudentDashboard from "./pages/studentPages/Dashboard";
 import StudentExams from "./pages/studentPages/Exams";
+import AttemptExam from "./pages/studentPages/AttemptExam";
 
 function App() {
   return (
@@ -113,6 +114,14 @@ function App() {
                 element={
                   <SideNavLayout sidebarItems={studentSidebarItems}>
                     <StudentExams />
+                  </SideNavLayout>
+                }
+              />
+              <Route
+                path="attempt/exam/:id"
+                element={
+                  <SideNavLayout sidebarItems={studentSidebarItems}>
+                    <AttemptExam />
                   </SideNavLayout>
                 }
               />

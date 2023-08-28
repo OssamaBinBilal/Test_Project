@@ -5,22 +5,24 @@ import RadioGroup from "@mui/material/RadioGroup";
 import { Box, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const MCQ = ({ passedKey, mcq, handleRadioChange, removeMCQ }) => {
+const MCQ = ({ passedKey, mcq, handleRadioChange, removeMCQ = () => {} }) => {
   return (
     <Box key={passedKey} sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         <Typography variant="span">
-          {`${passedKey}. ${mcq.questionText}`}
-          <CloseIcon
-            sx={{ color: "red" }}
-            onClick={() => {
-              removeMCQ(mcq);
-            }}
-          />
+          {`${passedKey}. ${mcq.question_statement}`}
+          {mcq.correctAnswer && (
+            <CloseIcon
+              sx={{ color: "red" }}
+              onClick={() => {
+                removeMCQ(mcq);
+              }}
+            />
+          )}
         </Typography>
       </Typography>
       <RadioGroup
-        value={mcq.correctAnswer}
+        value={mcq.correctAnswer || undefined}
         onChange={(event) => handleRadioChange(event, mcq.id)}
       >
         {mcq.options.map((option, index) => (

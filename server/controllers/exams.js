@@ -4,6 +4,7 @@ const MCQOption = require("../models/mcq_options");
 const MCQ = require("../models/mcq");
 const TextQuestion = require("../models/question");
 const Teacher = require("../models/teacher");
+const MCQOptions = require("../models/mcq_options");
 
 async function getPaginatedActiveExams(req, res) {
   const page = parseInt(req.query.page) || 1;
@@ -128,13 +129,45 @@ async function updateExamStatus(req, res) {
   }
 }
 
-module.exports = {
-  updateExamStatus,
-};
+async function getExamQuestions(req, res) {
+  const examId = req.params.examId;
+
+  try {
+    const exam = await Exam.findByPk(examId);
+
+    if (!exam) {
+      return res.status(404).json({ error: "Exam not found" });
+    }
+
+    const questions = await TextQuestion.findAll({
+      where: { exam_id: examId },
+    });
+    const mcqs = await MCQ.findAll({
+      where: { exam_id: examId },
+      attributes: ["id", "exam_id", "question_statement", "max_score"],
+    });
+    for (const mcq of mcqs) {
+      const mcqOptions = await MCQOptions.findAll({
+        where: { mcq_id: mcq.id },
+        attributes: ["option_text"],
+      });
+      mcq.setDataValue(
+        "options",
+        mcqOptions.map((option) => option.option_text)
+      );
+    }
+
+    res.json({ questions, mcqs });
+  } catch (error) {
+    console.error("Error fetching exam details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 module.exports = {
   getPaginatedActiveExams,
   createExamWithQuestions,
   getPaginatedExams,
   updateExamStatus,
+  getExamQuestions,
 };

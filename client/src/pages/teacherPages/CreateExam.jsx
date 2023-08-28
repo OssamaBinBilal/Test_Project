@@ -13,25 +13,25 @@ const CreateExam = () => {
   const [currentMCQs, setCurrentMCQs] = useState([
     {
       id: 1,
-      questionText: "Which gas is responsible for the greenhouse effect?",
+      question_statement: "Which gas is responsible for the greenhouse effect?",
       correctAnswer: "Oxygen",
       options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
     },
     {
       id: 2,
-      questionText: "Which element has an atomic mass of 1?",
+      question_statement: "Which element has an atomic mass of 1?",
       correctAnswer: "Hydrogen",
       options: ["Hydrogen", "Oxygen", "Uranium", "Flourine"],
     },
     {
       id: 3,
-      questionText: "What is the chemical symbol for gold?",
+      question_statement: "What is the chemical symbol for gold?",
       correctAnswer: "Au",
       options: ["Au", "Ag", "Fe", "Cu"],
     },
     {
       id: 4,
-      questionText: " What is the largest mammal?",
+      question_statement: " What is the largest mammal?",
       correctAnswer: "Blue Whale",
       options: ["Elephant", "Giraffe", "Blue Whale", "Hippopotamus"],
     },

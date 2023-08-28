@@ -10,6 +10,7 @@ const Input = ({
   helperText = "",
   sx,
   handleKeyDown = () => {},
+  onChange = () => {},
 }) => {
   return (
     <TextField
@@ -22,6 +23,7 @@ const Input = ({
       sx={sx}
       variant="standard"
       onKeyDown={handleKeyDown}
+      onChange={onChange}
     />
   );
 };

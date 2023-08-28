@@ -16,3 +16,18 @@ export const getActiveExams = async (page, pageSize) => {
     throw e;
   }
 };
+
+export const getExamQuestions = async (id) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/students/get-exam-questions/${id}`,
+      headers: {},
+    };
+    const response = await axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
