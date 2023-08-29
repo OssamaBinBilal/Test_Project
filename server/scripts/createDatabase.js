@@ -8,6 +8,7 @@ const Student = require("../models/student");
 const Solution = require("../models/solution");
 const TextANswer = require("../models/textAnswer");
 const MCQAnswer = require("../models/mcqAnswer");
+const Invitation = require("../models/invitation");
 const sequelize = require("../database/database");
 
 const initializeDatabase = async () => {
