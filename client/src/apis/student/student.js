@@ -58,6 +58,31 @@ export const login = async (email, password) => {
   }
 };
 
+export const submitSolution = async (examId, mcqs, questions) => {
+  try {
+    let data = JSON.stringify({
+      examId,
+      mcqs,
+      questions,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/students/submit-solution`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: data,
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const validateToken = async (token) => {
   try {
     let config = {

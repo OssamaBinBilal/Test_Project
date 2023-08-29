@@ -2,6 +2,9 @@ const bcrypt = require("bcrypt");
 const Student = require("../models/student");
 const jwt = require("jsonwebtoken");
 const { UniqueConstraintError } = require("sequelize");
+const Solution = require("../models/solution");
+const MCQAnswer = require("../models/mcqAnswer");
+const TextAnswer = require("../models/textAnswer");
 
 const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
@@ -84,6 +87,57 @@ async function loginStudent(req, res) {
   }
 }
 
+async function submitSolution(req, res) {
+  const { examId, mcqs, questions } = req.body;
+
+  const authToken = req.headers.authorization.split(" ")[1];
+
+  try {
+    const decodedToken = jwt.verify(authToken, SECRET_KEY);
+
+    const newSolution = await Solution.create({
+      exam_id: examId,
+      submitter_id: decodedToken.studentId,
+    }).catch((error) => {
+      throw new Error("Error creating solution: " + error.message);
+    });
+
+    const mcqAnswersPromises = mcqs.map(async (mcq) => {
+      try {
+        await MCQAnswer.create({
+          solution_id: newSolution.id,
+          mcq_id: mcq.id,
+          submitted_option: mcq.answer,
+        });
+      } catch (error) {
+        throw new Error("Error creating MCQAnswer: " + error.message);
+      }
+    });
+
+    const textAnswerPromises = questions.map(async (question) => {
+      try {
+        await TextAnswer.create({
+          solution_id: newSolution.id,
+          question_id: question.id,
+          submitted_answer: question.answer,
+        });
+      } catch (error) {
+        throw new Error("Error creating TextAnswer: " + error.message);
+      }
+    });
+
+    await Promise.all(mcqAnswersPromises);
+    await Promise.all(textAnswerPromises);
+
+    res.status(201).json({
+      message: "Solution created successfully.",
+    });
+  } catch (error) {
+    console.error("Error creating solution:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 async function verifyToken(req, res) {
   res.status(200).json({ message: "Valid Token" });
 }
@@ -93,4 +147,5 @@ module.exports = {
   getPaginatedStudents,
   loginStudent,
   verifyToken,
+  submitSolution,
 };

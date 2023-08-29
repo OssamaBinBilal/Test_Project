@@ -4,7 +4,11 @@ const {
   getPaginatedActiveExams,
   getExamQuestions,
 } = require("../controllers/exams");
-const { loginStudent, verifyToken } = require("../controllers/students");
+const {
+  loginStudent,
+  verifyToken,
+  submitSolution,
+} = require("../controllers/students");
 const authenticateToken = require("../middlewares/authenticateToken");
 const { authorizeAsStudent } = require("../middlewares/student/student");
 
@@ -15,6 +19,12 @@ router.post(
   authenticateToken,
   authorizeAsStudent,
   verifyToken
+);
+router.post(
+  "/submit-solution",
+  // authenticateToken,
+  // authorizeAsStudent,
+  submitSolution
 );
 
 router.post("/login", loginStudent);

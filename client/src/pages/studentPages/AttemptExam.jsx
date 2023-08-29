@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getExamQuestions } from "../../apis/student/student";
+import { getExamQuestions, submitSolution } from "../../apis/student/student";
 import MCQ from "../../components/MCQ/MCQ";
 import { Box, Button } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
@@ -65,8 +65,7 @@ const AttemptExam = () => {
             activeStep < mcqs.length + questions.length - 1
               ? handleNext
               : () => {
-                  console.log(mcqsSolution);
-                  console.log(textSolutions);
+                  submitSolution(id, mcqsSolution, textSolutions);
                 }
           }
           sx={{ marginLeft: "auto" }}
