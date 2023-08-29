@@ -56,6 +56,7 @@ const AddMCQModal = ({ open, setOpen, idToAssign, addMCQ }) => {
       questionText: textRef.current.value,
       correctAnswer: correctOption,
       options: possibleOptions,
+      maxScore: 1,
     });
   };
 

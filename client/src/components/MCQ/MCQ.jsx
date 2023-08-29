@@ -10,7 +10,7 @@ const MCQ = ({ passedKey, mcq, handleRadioChange, removeMCQ = () => {} }) => {
     <Box key={passedKey} sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         <Typography variant="span">
-          {`${passedKey}. ${mcq.question_statement}`}
+          {`${passedKey}. ${mcq.question_statement || mcq.questionText}`}
           {mcq.correctAnswer && (
             <CloseIcon
               sx={{ color: "red" }}

@@ -44,3 +44,39 @@ export const validateToken = async (token) => {
     throw e;
   }
 };
+
+export const createExam = async (mcqs, questions) => {
+  const formattedMCQs = mcqs.map((mcq) => {
+    const convertedOptions = mcq.options.map((optionText) => ({ optionText }));
+    return {
+      ...mcq,
+      options: convertedOptions,
+    };
+  });
+
+  let data = JSON.stringify({
+    creatorId: 89,
+    startTime: "2023-08-01T10:00:00Z",
+    endTime: "2023-08-30T12:00:00Z",
+    subject: "Sample Exam 1",
+    textQuestions: questions,
+    mcqs: formattedMCQs,
+  });
+
+  try {
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/teacher/create-exam`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: data,
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};

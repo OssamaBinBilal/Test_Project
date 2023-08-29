@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 const AddQuestionModal = ({ open, setOpen, idToAssign, addQuestion }) => {
   const questionRef = useRef(null);
   const answerRef = useRef(null);
+  const scoreRef = useRef(null);
 
   const handleSubmitQuestion = () => {
     if (questionRef.current.value === "") {
@@ -18,8 +19,9 @@ const AddQuestionModal = ({ open, setOpen, idToAssign, addQuestion }) => {
 
     addQuestion({
       id: idToAssign,
-      text: questionRef.current.value,
-      answer: answerRef.current.value,
+      questionText: questionRef.current.value,
+      correctAnswer: answerRef.current.value,
+      maxScore: scoreRef.current.value,
     });
   };
 
@@ -37,6 +39,13 @@ const AddQuestionModal = ({ open, setOpen, idToAssign, addQuestion }) => {
         required={false}
         type="text"
         label="Add an answer for your question"
+        sx={{ width: "100%", mb: 2 }}
+      />
+      <Input
+        inputRef={scoreRef}
+        required={false}
+        type="text"
+        label="Add a maximum scorefor your question"
         sx={{ width: "100%" }}
       />
       <Button

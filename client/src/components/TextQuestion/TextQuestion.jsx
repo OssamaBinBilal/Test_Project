@@ -6,13 +6,13 @@ const TextQuestion = ({ passedKey, question, removeQuestion }) => {
   return (
     <Box key={passedKey} sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-        {`${passedKey}. ${question.text}`}{" "}
+        {`${passedKey}. ${question.questionText}`}{" "}
         <CloseIcon
           onClick={() => removeQuestion(question)}
           sx={{ color: "red" }}
         />
       </Typography>
-      <Typography variant="p">{question.answer}</Typography>
+      <Typography variant="p">{question.correctAnswer}</Typography>
     </Box>
   );
 };

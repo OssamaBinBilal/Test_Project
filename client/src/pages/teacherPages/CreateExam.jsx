@@ -5,52 +5,14 @@ import { Box } from "@mui/material";
 import TextQuestion from "../../components/TextQuestion/TextQuestion";
 import AddMCQModal from "./modals/AddMCQModal";
 import AddQuestionModal from "./modals/AddQuestionModal";
+import { createExam } from "../../apis/teacher/teacher";
 
 const CreateExam = () => {
   const [isAddMCQModalOpen, setIsAddMCQModalOpen] = useState(false);
   const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
 
-  const [currentMCQs, setCurrentMCQs] = useState([
-    {
-      id: 1,
-      question_statement: "Which gas is responsible for the greenhouse effect?",
-      correctAnswer: "Oxygen",
-      options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-    },
-    {
-      id: 2,
-      question_statement: "Which element has an atomic mass of 1?",
-      correctAnswer: "Hydrogen",
-      options: ["Hydrogen", "Oxygen", "Uranium", "Flourine"],
-    },
-    {
-      id: 3,
-      question_statement: "What is the chemical symbol for gold?",
-      correctAnswer: "Au",
-      options: ["Au", "Ag", "Fe", "Cu"],
-    },
-    {
-      id: 4,
-      question_statement: " What is the largest mammal?",
-      correctAnswer: "Blue Whale",
-      options: ["Elephant", "Giraffe", "Blue Whale", "Hippopotamus"],
-    },
-  ]);
-
-  const [currentTextQuestions, setCurrentTextQuestions] = useState([
-    {
-      id: 1,
-      text: "Who is the current president of the United States?",
-      answer:
-        "The current president of the USA is Joe Biden, whereas Donald J.Trump was the one prior to him",
-    },
-    {
-      id: 2,
-      text: "Can you write a brief document about the Indian Revolt?",
-      answer:
-        "The Indian Revolt, also known as the Indian Rebellion of 1857 or the Sepoy Mutiny, marked a pivotal moment in the history of British colonial rule in India. This armed uprising, which began as a localized mutiny among Indian soldiers serving in the British East India Company's army, soon evolved into a widespread rebellion involving various sections of Indian society. Spanning from 1857 to 1858, the Indian Revolt had far-reaching implications for both India and the British Empire.",
-    },
-  ]);
+  const [currentMCQs, setCurrentMCQs] = useState([]);
+  const [currentTextQuestions, setCurrentTextQuestions] = useState([]);
 
   const updateCorrectAnswer = (event, id) => {
     setCurrentMCQs(
@@ -91,6 +53,14 @@ const CreateExam = () => {
           onClick={() => setIsAddQuestionModalOpen(true)}
         >
           + ADD QUESTION
+        </Button>
+        <Button
+          sx={{ ml: 2 }}
+          variant="contained"
+          color="success"
+          onClick={() => createExam(currentMCQs, currentTextQuestions)}
+        >
+          SUBMIT EXAM
         </Button>
       </Box>
       <Box
