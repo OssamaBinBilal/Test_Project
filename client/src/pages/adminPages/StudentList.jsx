@@ -4,11 +4,13 @@ import { Box } from "@mui/material";
 import _columns from "../../handlers/_studentColumns";
 import { getStudents } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
+  const navigate = useNavigate();
 
   const itemsPerPage = 10;
 
@@ -24,6 +26,10 @@ const StudentList = () => {
       })
       .catch((e) => {
         console.log(e.response.data.error);
+        if (e.response.status === 403) {
+          console.log("Your token is invalid, please log in again");
+          navigate("/admin/login");
+        }
       });
   }, [currentPage]);
 

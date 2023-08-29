@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { login } from "../../apis/admin/admin";
 import { useUser } from "../../context/userContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../apis/teacher/teacher";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ const Login = () => {
     login(email, password)
       .then((response) => {
         persistToken(response.data.token);
-        navigate("/admin");
+        navigate("/teacher");
       })
       .catch((e) => console.log(e));
   };

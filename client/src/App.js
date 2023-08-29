@@ -19,6 +19,11 @@ import StudentDashboard from "./pages/studentPages/Dashboard";
 import StudentExams from "./pages/studentPages/Exams";
 import AttemptExam from "./pages/studentPages/AttemptExam";
 import { UserProvider } from "./context/userContext";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute/ProtectedAdminRoute";
+import NonAdminLoginRoute from "./components/NonAdminLoginRoute/NonAdminLoginRoutes";
+import TeacherLogin from "./pages/teacherPages/Login";
+import ProtectedTeacherRoute from "./components/ProtectedTeacherRoute/ProtectedTeacherRoute";
+import NonTeacherLoginRoute from "./components/NonTeacherLoginRoute/NonTeacherLoginRoute";
 
 function App() {
   return (
@@ -28,71 +33,102 @@ function App() {
           <Router>
             <Routes>
               <Route path="/admin">
-                <Route path="login" element={<AdminLogin />} />
+                <Route
+                  path="login"
+                  element={
+                    <NonAdminLoginRoute>
+                      <AdminLogin />
+                    </NonAdminLoginRoute>
+                  }
+                />
                 <Route
                   path=""
                   element={
-                    <SideNavLayout sidebarItems={adminSidebarItems}>
-                      <AdminDashboard />
-                    </SideNavLayout>
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <AdminDashboard />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
                   }
                 />
                 <Route
                   path="register-user"
                   element={
-                    <SideNavLayout sidebarItems={adminSidebarItems}>
-                      <RegisterUser />
-                    </SideNavLayout>
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <RegisterUser />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
                   }
                 />
                 <Route
                   path="students"
                   element={
-                    <SideNavLayout sidebarItems={adminSidebarItems}>
-                      <StudentList />
-                    </SideNavLayout>
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <StudentList />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
                   }
                 />
                 <Route
                   path="teachers"
                   element={
-                    <SideNavLayout sidebarItems={adminSidebarItems}>
-                      <TeacherList />
-                    </SideNavLayout>
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <TeacherList />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
                   }
                 />
                 <Route
                   path="exams"
                   element={
-                    <SideNavLayout sidebarItems={adminSidebarItems}>
-                      <ExamList />
-                    </SideNavLayout>
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <ExamList />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
                   }
                 />
                 <Route
                   path="questionnaires"
                   element={
-                    <SideNavLayout sidebarItems={adminSidebarItems}>
-                      <QuestionnaireList />
-                    </SideNavLayout>
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <QuestionnaireList />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
                   }
                 />
               </Route>
               <Route path="/teacher">
                 <Route
+                  path="login"
+                  element={
+                    <NonTeacherLoginRoute>
+                      <TeacherLogin />
+                    </NonTeacherLoginRoute>
+                  }
+                />
+                <Route
                   path=""
                   element={
-                    <SideNavLayout sidebarItems={teacherSidebarItems}>
-                      <TeacherDashboard />
-                    </SideNavLayout>
+                    <ProtectedTeacherRoute>
+                      <SideNavLayout sidebarItems={teacherSidebarItems}>
+                        <TeacherDashboard />
+                      </SideNavLayout>
+                    </ProtectedTeacherRoute>
                   }
                 />
                 <Route
                   path="create-exam"
                   element={
-                    <SideNavLayout sidebarItems={teacherSidebarItems}>
-                      <CreateExam />
-                    </SideNavLayout>
+                    <ProtectedTeacherRoute>
+                      <SideNavLayout sidebarItems={teacherSidebarItems}>
+                        <CreateExam />
+                      </SideNavLayout>
+                    </ProtectedTeacherRoute>
                   }
                 />
                 <Route path="questionnaires" element={<>Questionnaires</>} />

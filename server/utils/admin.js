@@ -1,4 +1,5 @@
 const Admin = require("../models/admin");
+const Teacher = require("../models/teacher");
 
 async function isRegisteredAsAdmin(email) {
   try {
@@ -10,6 +11,17 @@ async function isRegisteredAsAdmin(email) {
   }
 }
 
+async function isRegisteredAsTeacher(email) {
+  try {
+    const teacher = await Teacher.findOne({ where: { email } });
+    return teacher !== null;
+  } catch (error) {
+    console.error("Error checking admin:", error);
+    return false;
+  }
+}
+
 module.exports = {
   isRegisteredAsAdmin,
+  isRegisteredAsTeacher,
 };

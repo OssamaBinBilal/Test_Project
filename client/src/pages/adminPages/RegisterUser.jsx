@@ -3,6 +3,7 @@ import Input from "../../components/Input/Input";
 import Switch from "../../components/Switch/Switch";
 import { Button } from "@mui/material";
 import { createStudent, createTeacher } from "../../apis/admin/admin";
+import { useNavigate } from "react-router-dom";
 
 const RegisterUser = () => {
   const type1 = "Teacher";
@@ -18,6 +19,8 @@ const RegisterUser = () => {
   const toggleType = () => {
     type === type1 ? setType(type2) : setType(type1);
   };
+
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     const firstname = firstnameRef.current.value;
@@ -51,11 +54,23 @@ const RegisterUser = () => {
     if (type === "Student") {
       createStudent(firstname, lastname, email, password)
         .then((response) => console.log(response))
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          if (e.response.status === 403) {
+            console.log("Your token is invalid, please log in again");
+            navigate("/admin/login");
+          }
+          console.log(e);
+        });
     } else {
       createTeacher(firstname, lastname, email, password)
         .then((response) => console.log(response))
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          if (e.response.status === 403) {
+            console.log("Your token is invalid, please log in again");
+            navigate("/admin/login");
+          }
+          console.log(e);
+        });
     }
 
     console.log(type);

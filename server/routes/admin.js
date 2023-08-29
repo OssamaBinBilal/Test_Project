@@ -14,10 +14,8 @@ const {
   loginAdmin,
   verifyToken,
 } = require("../controllers/admin");
-const {
-  authenticateToken,
-  authorizeAsAdmin,
-} = require("../middlewares/admin/admin");
+const { authorizeAsAdmin } = require("../middlewares/admin/admin");
+const authenticateToken = require("../middlewares/authenticateToken");
 
 router.post(
   "/create-student",

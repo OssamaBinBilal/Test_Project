@@ -1,6 +1,9 @@
 const bcrypt = require("bcrypt");
 const Teacher = require("../models/teacher");
+const jwt = require("jsonwebtoken");
 const { UniqueConstraintError } = require("sequelize");
+
+const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
 async function createTeacher(req, res) {
   const { firstName, lastName, email, password } = req.body;
@@ -50,7 +53,44 @@ async function getPaginatedTeachers(req, res) {
   }
 }
 
+async function loginTeacher(req, res) {
+  const { email, password } = req.body;
+
+  try {
+    const teacher = await Teacher.findOne({ where: { email } });
+
+    if (!teacher) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, teacher.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const token = jwt.sign(
+      { teacherId: teacher.id, email: email },
+      SECRET_KEY,
+      {
+        expiresIn: "15m",
+      }
+    );
+
+    res.json({ message: "Login successful", token });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+async function verifyToken(req, res) {
+  res.status(200).json({ message: "Valid Token" });
+}
+
 module.exports = {
   createTeacher,
   getPaginatedTeachers,
+  loginTeacher,
+  verifyToken,
 };

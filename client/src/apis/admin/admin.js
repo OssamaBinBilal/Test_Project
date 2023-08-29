@@ -8,7 +8,9 @@ export const getStudents = async (page, pageSize) => {
       method: "get",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/admin/get-students?page=${page}&pageSize=${pageSize}`,
-      headers: {},
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     };
     const response = await axios.request(config);
     return response;
@@ -23,7 +25,9 @@ export const getTeachers = async (page, pageSize) => {
       method: "get",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/admin/get-teachers?page=${page}&pageSize=${pageSize}`,
-      headers: {},
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     };
     const response = await axios.request(config);
     return response;
@@ -38,7 +42,9 @@ export const getExams = async (page, pageSize) => {
       method: "get",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/admin/get-all-exams?page=${page}&perPage=${pageSize}`,
-      headers: {},
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     };
     const response = await axios.request(config);
     return response;
@@ -62,6 +68,7 @@ export const createStudent = async (firstName, lastName, email, password) => {
       url: `${BASE_URL}/admin/create-student`,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       data: data,
     };
@@ -88,6 +95,7 @@ export const createTeacher = async (firstName, lastName, email, password) => {
       url: `${BASE_URL}/admin/create-teacher`,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       data: data,
     };
@@ -136,6 +144,7 @@ export const updateExamStatus = async (id, status) => {
       url: `${BASE_URL}/admin/update-exam-status`,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       data: data,
     };
