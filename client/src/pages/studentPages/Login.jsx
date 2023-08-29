@@ -1,12 +1,22 @@
 import React, { useState } from "react";
+import { useUser } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../apis/student/student";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { persistToken } = useUser();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    login(email, password)
+      .then((response) => {
+        persistToken(response.data.token);
+        navigate("/student");
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
