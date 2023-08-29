@@ -8,7 +8,7 @@ export const getActiveExams = async (page, pageSize) => {
       method: "get",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/students/get-active-exams?page=${page}&perPage=${pageSize}`,
-      headers: {},
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     };
     const response = await axios.request(config);
     return response;
@@ -23,9 +23,52 @@ export const getExamQuestions = async (id) => {
       method: "get",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/students/get-exam-questions/${id}`,
-      headers: {},
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     };
     const response = await axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const login = async (email, password) => {
+  console.log("logging in with", email, password);
+
+  try {
+    let data = JSON.stringify({
+      email,
+      password,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/students/login`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    const response = await axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const validateToken = async (token) => {
+  try {
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/students/validate-token`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = axios.request(config);
     return response;
   } catch (e) {
     throw e;

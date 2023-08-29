@@ -24,6 +24,9 @@ import NonAdminLoginRoute from "./components/NonAdminLoginRoute/NonAdminLoginRou
 import TeacherLogin from "./pages/teacherPages/Login";
 import ProtectedTeacherRoute from "./components/ProtectedTeacherRoute/ProtectedTeacherRoute";
 import NonTeacherLoginRoute from "./components/NonTeacherLoginRoute/NonTeacherLoginRoute";
+import StudentLogin from "./pages/studentPages/Login";
+import ProtectedStudentRoute from "./components/ProtectedStudentRoute/ProtectedStudentRoute";
+import NonStudentLoginRoute from "./components/NonStudentLoginRoute/NonStudentLoginRoute";
 
 function App() {
   return (
@@ -136,27 +139,41 @@ function App() {
               </Route>
               <Route path="/student">
                 <Route
+                  path="login"
+                  element={
+                    <NonStudentLoginRoute>
+                      <StudentLogin />
+                    </NonStudentLoginRoute>
+                  }
+                />
+                <Route
                   path=""
                   element={
-                    <SideNavLayout sidebarItems={studentSidebarItems}>
-                      <StudentDashboard />
-                    </SideNavLayout>
+                    <ProtectedStudentRoute>
+                      <SideNavLayout sidebarItems={studentSidebarItems}>
+                        <StudentDashboard />
+                      </SideNavLayout>
+                    </ProtectedStudentRoute>
                   }
                 />
                 <Route
                   path="exams"
                   element={
-                    <SideNavLayout sidebarItems={studentSidebarItems}>
-                      <StudentExams />
-                    </SideNavLayout>
+                    <ProtectedStudentRoute>
+                      <SideNavLayout sidebarItems={studentSidebarItems}>
+                        <StudentExams />
+                      </SideNavLayout>
+                    </ProtectedStudentRoute>
                   }
                 />
                 <Route
                   path="attempt/exam/:id"
                   element={
-                    <SideNavLayout sidebarItems={studentSidebarItems}>
-                      <AttemptExam />
-                    </SideNavLayout>
+                    <ProtectedStudentRoute>
+                      <SideNavLayout sidebarItems={studentSidebarItems}>
+                        <AttemptExam />
+                      </SideNavLayout>
+                    </ProtectedStudentRoute>
                   }
                 />
               </Route>
