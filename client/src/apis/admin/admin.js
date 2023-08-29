@@ -99,6 +99,30 @@ export const createTeacher = async (firstName, lastName, email, password) => {
   }
 };
 
+export const login = async (email, password) => {
+  try {
+    let data = JSON.stringify({
+      email,
+      password,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/login`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    const response = await axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const updateExamStatus = async (id, status) => {
   try {
     let data = JSON.stringify({
@@ -116,6 +140,23 @@ export const updateExamStatus = async (id, status) => {
       data: data,
     };
 
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const validateToken = async (token) => {
+  try {
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/validate-token`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     const response = axios.request(config);
     return response;
   } catch (e) {

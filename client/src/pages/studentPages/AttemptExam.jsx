@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getExamQuestions } from "../../apis/student/student";
 import MCQ from "../../components/MCQ/MCQ";
-import { Box, Button, Slide } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import InputTextQuestion from "../../components/InputTextQuestion/InputTextQuestion";
 
 const AttemptExam = () => {

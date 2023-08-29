@@ -1,5 +1,10 @@
 const nodemailer = require("nodemailer");
 const Invitation = require("../models/invitation");
+const Admin = require("../models/admin");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
 const sendInvitation = async (req, res) => {
   const { email } = req.body;
@@ -41,6 +46,39 @@ const sendInvitation = async (req, res) => {
   }
 };
 
+async function loginAdmin(req, res) {
+  const { email, password } = req.body;
+
+  try {
+    const admin = await Admin.findOne({ where: { email } });
+
+    if (!admin) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const token = jwt.sign({ adminId: admin.id, email: email }, SECRET_KEY, {
+      expiresIn: "15m",
+    });
+
+    res.json({ message: "Login successful", token });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+async function verifyToken(req, res) {
+  res.status(200).json({ message: "Valid Token" });
+}
+
 module.exports = {
   sendInvitation,
+  loginAdmin,
+  verifyToken,
 };

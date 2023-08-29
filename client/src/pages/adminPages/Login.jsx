@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import { login } from "../../apis/admin/admin";
+import { useUser } from "../../context/userContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { persistToken } = useUser();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    login(email, password)
+      .then((response) => {
+        persistToken(response.data.token);
+      })
+      .catch((e) => console.log(e));
   };
 
   return (

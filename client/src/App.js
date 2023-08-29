@@ -1,4 +1,4 @@
-import Login from "./pages/Login";
+import AdminLogin from "./pages/adminPages/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminDashboard from "./pages/adminPages/Dashboard";
 import RegisterUser from "./pages/adminPages/RegisterUser";
@@ -18,117 +18,116 @@ import { studentSidebarItems } from "./components/SideNavLayout/studentSidebarLi
 import StudentDashboard from "./pages/studentPages/Dashboard";
 import StudentExams from "./pages/studentPages/Exams";
 import AttemptExam from "./pages/studentPages/AttemptExam";
+import { UserProvider } from "./context/userContext";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CustomizableProvider>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/admin">
-              <Route
-                path=""
-                element={
-                  <SideNavLayout sidebarItems={adminSidebarItems}>
-                    <AdminDashboard />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="register-user"
-                element={
-                  <SideNavLayout sidebarItems={adminSidebarItems}>
-                    <RegisterUser />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="students"
-                element={
-                  <SideNavLayout sidebarItems={adminSidebarItems}>
-                    <StudentList />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="teachers"
-                element={
-                  <SideNavLayout sidebarItems={adminSidebarItems}>
-                    <TeacherList />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="exams"
-                element={
-                  <SideNavLayout sidebarItems={adminSidebarItems}>
-                    <ExamList />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="questionnaires"
-                element={
-                  <SideNavLayout sidebarItems={adminSidebarItems}>
-                    <QuestionnaireList />
-                  </SideNavLayout>
-                }
-              />
-            </Route>
-            <Route path="/teacher">
-              <Route
-                path=""
-                element={
-                  <SideNavLayout sidebarItems={teacherSidebarItems}>
-                    <TeacherDashboard />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="create-exam"
-                element={
-                  <SideNavLayout sidebarItems={teacherSidebarItems}>
-                    <CreateExam />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="create-questionnaire"
-                element={<>Questionnaires</>}
-              />
-              <Route path="questionnaires" element={<>Questionnaires</>} />
-              <Route path="solutions" element={<>Questionnaires</>} />
-            </Route>
-            <Route path="/student">
-              <Route
-                path=""
-                element={
-                  <SideNavLayout sidebarItems={studentSidebarItems}>
-                    <StudentDashboard />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="exams"
-                element={
-                  <SideNavLayout sidebarItems={studentSidebarItems}>
-                    <StudentExams />
-                  </SideNavLayout>
-                }
-              />
-              <Route
-                path="attempt/exam/:id"
-                element={
-                  <SideNavLayout sidebarItems={studentSidebarItems}>
-                    <AttemptExam />
-                  </SideNavLayout>
-                }
-              />
-            </Route>
-            <Route path="*" element={<>LMFAO INVALIUD ROUTE</>} />
-          </Routes>
-        </Router>
+        <UserProvider>
+          <Router>
+            <Routes>
+              <Route path="/admin">
+                <Route path="login" element={<AdminLogin />} />
+                <Route
+                  path=""
+                  element={
+                    <SideNavLayout sidebarItems={adminSidebarItems}>
+                      <AdminDashboard />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="register-user"
+                  element={
+                    <SideNavLayout sidebarItems={adminSidebarItems}>
+                      <RegisterUser />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="students"
+                  element={
+                    <SideNavLayout sidebarItems={adminSidebarItems}>
+                      <StudentList />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="teachers"
+                  element={
+                    <SideNavLayout sidebarItems={adminSidebarItems}>
+                      <TeacherList />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="exams"
+                  element={
+                    <SideNavLayout sidebarItems={adminSidebarItems}>
+                      <ExamList />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="questionnaires"
+                  element={
+                    <SideNavLayout sidebarItems={adminSidebarItems}>
+                      <QuestionnaireList />
+                    </SideNavLayout>
+                  }
+                />
+              </Route>
+              <Route path="/teacher">
+                <Route
+                  path=""
+                  element={
+                    <SideNavLayout sidebarItems={teacherSidebarItems}>
+                      <TeacherDashboard />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="create-exam"
+                  element={
+                    <SideNavLayout sidebarItems={teacherSidebarItems}>
+                      <CreateExam />
+                    </SideNavLayout>
+                  }
+                />
+                <Route path="questionnaires" element={<>Questionnaires</>} />
+                <Route path="solutions" element={<>Questionnaires</>} />
+              </Route>
+              <Route path="/student">
+                <Route
+                  path=""
+                  element={
+                    <SideNavLayout sidebarItems={studentSidebarItems}>
+                      <StudentDashboard />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="exams"
+                  element={
+                    <SideNavLayout sidebarItems={studentSidebarItems}>
+                      <StudentExams />
+                    </SideNavLayout>
+                  }
+                />
+                <Route
+                  path="attempt/exam/:id"
+                  element={
+                    <SideNavLayout sidebarItems={studentSidebarItems}>
+                      <AttemptExam />
+                    </SideNavLayout>
+                  }
+                />
+              </Route>
+              <Route path="*" element={<>LMFAO INVALIUD ROUTE</>} />
+            </Routes>
+          </Router>
+        </UserProvider>
       </CustomizableProvider>
     </ThemeProvider>
   );
