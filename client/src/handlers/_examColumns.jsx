@@ -69,7 +69,7 @@ const useExamColumns = (
   const updateStatusColumn = {
     field: "updateStatus",
     headerName: "Update Status",
-    width: 200,
+    width: 150,
     sortable: false,
     renderCell: (params) => (
       <>
@@ -113,8 +113,31 @@ const useExamColumns = (
     ),
   };
 
+  const viewSolutionsColumn = {
+    field: "viewSolutions",
+    headerName: "View Solutions",
+    width: 200,
+    sortable: false,
+    renderCell: (params) => (
+      <>
+        <Button
+          sx={{ fontWeight: "bold", textTransform: "capitalize" }}
+          variant="contained"
+          onClick={() => console.log()}
+        >
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            to={`/admin/solutions/${params.row.id}`}
+          >
+            View Solutions
+          </Link>
+        </Button>
+      </>
+    ),
+  };
+
   return displayUpdateStatusColumn === "admin"
-    ? [...staticColumns, updateStatusColumn]
+    ? [...staticColumns, updateStatusColumn, viewSolutionsColumn]
     : [...staticColumns, attemptExamColumn];
 };
 

@@ -27,6 +27,8 @@ import NonTeacherLoginRoute from "./components/NonTeacherLoginRoute/NonTeacherLo
 import StudentLogin from "./pages/studentPages/Login";
 import ProtectedStudentRoute from "./components/ProtectedStudentRoute/ProtectedStudentRoute";
 import NonStudentLoginRoute from "./components/NonStudentLoginRoute/NonStudentLoginRoute";
+import ViewSolutions from "./pages/adminPages/ViewSolutions";
+import AdminSolution from "./pages/adminPages/Solution";
 
 function App() {
   return (
@@ -90,6 +92,26 @@ function App() {
                     <ProtectedAdminRoute>
                       <SideNavLayout sidebarItems={adminSidebarItems}>
                         <ExamList />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="solutions/:examId"
+                  element={
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <ViewSolutions />
+                      </SideNavLayout>
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="solution/:solutionId"
+                  element={
+                    <ProtectedAdminRoute>
+                      <SideNavLayout sidebarItems={adminSidebarItems}>
+                        <AdminSolution />
                       </SideNavLayout>
                     </ProtectedAdminRoute>
                   }

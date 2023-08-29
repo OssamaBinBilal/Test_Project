@@ -16,6 +16,10 @@ const {
 } = require("../controllers/admin");
 const { authorizeAsAdmin } = require("../middlewares/admin/admin");
 const authenticateToken = require("../middlewares/authenticateToken");
+const {
+  getSolutionsByExamId,
+  getAccumulatedSolution,
+} = require("../controllers/solution");
 
 router.post(
   "/create-student",
@@ -60,6 +64,19 @@ router.post(
   authenticateToken,
   authorizeAsAdmin,
   verifyToken
+);
+router.get(
+  "/exam/:examId/solutions",
+  authenticateToken,
+  authorizeAsAdmin,
+  getSolutionsByExamId
+);
+
+router.get(
+  "/accumulated-solution",
+  authenticateToken,
+  authorizeAsAdmin,
+  getAccumulatedSolution
 );
 
 module.exports = router;

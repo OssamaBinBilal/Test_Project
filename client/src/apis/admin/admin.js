@@ -172,3 +172,37 @@ export const validateToken = async (token) => {
     throw e;
   }
 };
+
+export const getSolutionsByExam = async (id, page, pageSize) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/exam/${id}/solutions?page=${1}&pageSize=${pageSize}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getAccumulatedSolution = async (id) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/admin/accumulated-solution?solutionId=${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
