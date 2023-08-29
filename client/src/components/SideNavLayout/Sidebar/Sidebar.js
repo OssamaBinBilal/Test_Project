@@ -4,7 +4,6 @@ import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import { Button, Typography, useTheme } from "@mui/material";
 import logo from "../../../assets/logo1500.png";
-import { adminSidebarItems } from "../adminSidebarLinks";
 import { Link } from "react-router-dom";
 import { useCustomizable } from "../../../context/useCustomizable";
 
@@ -21,7 +20,7 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <Box>
-      {adminSidebarItems.map(({ heading, items }, index) => (
+      {props.sidebarItems.map(({ heading, items }, index) => (
         <Box key={index}>
           <Typography
             variant="p"
