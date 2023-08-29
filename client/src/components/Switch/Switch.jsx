@@ -35,7 +35,7 @@ const Switch = ({ type1, type2, currentType, toggleType }) => {
           }}
           onClick={toggleType}
         >
-          Student
+          {type1}
         </Button>
         <Button
           disableRipple
@@ -48,7 +48,7 @@ const Switch = ({ type1, type2, currentType, toggleType }) => {
           }}
           onClick={toggleType}
         >
-          Teacher
+          {type2}
         </Button>
       </Box>
     </Box>
