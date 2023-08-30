@@ -99,3 +99,20 @@ export const validateToken = async (token) => {
     throw e;
   }
 };
+
+export const getAccumulatedSolution = async (id) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/students/accumulated-solution?solutionId=${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};

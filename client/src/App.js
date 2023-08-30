@@ -29,6 +29,7 @@ import ProtectedStudentRoute from "./components/ProtectedStudentRoute/ProtectedS
 import NonStudentLoginRoute from "./components/NonStudentLoginRoute/NonStudentLoginRoute";
 import ViewSolutions from "./pages/adminPages/ViewSolutions";
 import AdminSolution from "./pages/adminPages/Solution";
+import StudentSolution from "./pages/studentPages/Solution";
 
 function App() {
   return (
@@ -179,6 +180,16 @@ function App() {
                   }
                 />
                 <Route
+                  path="solution/:solutionId"
+                  element={
+                    <ProtectedStudentRoute>
+                      <SideNavLayout sidebarItems={studentSidebarItems}>
+                        <StudentSolution />
+                      </SideNavLayout>
+                    </ProtectedStudentRoute>
+                  }
+                />
+                <Route
                   path="exams"
                   element={
                     <ProtectedStudentRoute>
@@ -199,7 +210,7 @@ function App() {
                   }
                 />
               </Route>
-              <Route path="*" element={<>LMFAO INVALIUD ROUTE</>} />
+              <Route path="*" element={<>This is an invalid route</>} />
             </Routes>
           </Router>
         </UserProvider>

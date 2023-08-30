@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getExamQuestions, submitSolution } from "../../apis/student/student";
 import MCQ from "../../components/MCQ/MCQ";
 import { Box, Button } from "@mui/material";
@@ -16,6 +16,8 @@ const AttemptExam = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
+
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -65,7 +67,11 @@ const AttemptExam = () => {
             activeStep < mcqs.length + questions.length - 1
               ? handleNext
               : () => {
-                  submitSolution(id, mcqsSolution, textSolutions);
+                  submitSolution(id, mcqsSolution, textSolutions)
+                    .then((response) =>
+                      navigate(`/student/solution/${response.data.solutionId}`)
+                    )
+                    .catch((e) => console.log(e));
                 }
           }
           sx={{ marginLeft: "auto" }}

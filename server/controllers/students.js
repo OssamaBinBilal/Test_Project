@@ -145,6 +145,7 @@ async function submitSolution(req, res) {
 
     res.status(201).json({
       message: "Solution created successfully.",
+      solutionId: newSolution.id,
     });
   } catch (error) {
     console.error("Error creating solution:", error);
