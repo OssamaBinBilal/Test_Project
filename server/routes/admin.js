@@ -1,5 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+
+const upload = multer({ dest: "uploads/" });
+
 const {
   createStudent,
   getPaginatedStudents,
@@ -13,6 +17,7 @@ const {
   sendInvitation,
   loginAdmin,
   verifyToken,
+  createUser,
 } = require("../controllers/admin");
 const { authorizeAsAdmin } = require("../middlewares/admin/admin");
 const authenticateToken = require("../middlewares/authenticateToken");
@@ -23,6 +28,7 @@ const {
 
 router.post(
   "/create-student",
+  upload.single("image"),
   authenticateToken,
   authorizeAsAdmin,
   createStudent

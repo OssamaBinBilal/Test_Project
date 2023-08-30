@@ -55,7 +55,6 @@ export const createExam = async (mcqs, questions) => {
   });
 
   let data = JSON.stringify({
-    creatorId: 89,
     startTime: "2023-08-01T10:00:00Z",
     endTime: "2023-08-30T12:00:00Z",
     subject: "Sample Exam 1",

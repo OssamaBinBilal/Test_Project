@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 
 const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
+const createUser = async (req, res) => {};
+
 const sendInvitation = async (req, res) => {
   const { email } = req.body;
   const token = Math.floor(100000 + Math.random() * 900000).toString();
@@ -81,4 +83,5 @@ module.exports = {
   sendInvitation,
   loginAdmin,
   verifyToken,
+  createUser,
 };

@@ -113,10 +113,10 @@ async function generateFakeExams(count) {
 
 const generateFakeData = async () => {
   try {
-    await generateFakeStudents(student_count);
-    await generateFakeTeachers(teacher_count);
+    // await generateFakeStudents(student_count);
+    // await generateFakeTeachers(teacher_count);
     await generateFakeAdmins(admin_count);
-    await generateFakeExams(exam_count);
+    // await generateFakeExams(exam_count);
   } catch (e) {
     console.log(e);
   }

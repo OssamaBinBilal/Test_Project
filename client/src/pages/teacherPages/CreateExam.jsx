@@ -58,7 +58,11 @@ const CreateExam = () => {
           sx={{ ml: 2 }}
           variant="contained"
           color="success"
-          onClick={() => createExam(currentMCQs, currentTextQuestions)}
+          onClick={() =>
+            createExam(currentMCQs, currentTextQuestions)
+              .then((response) => console.log(response))
+              .catch((e) => console.log(e))
+          }
         >
           SUBMIT EXAM
         </Button>

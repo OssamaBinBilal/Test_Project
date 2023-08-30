@@ -4,6 +4,7 @@ const MCQOptions = require("../models/mcq_options");
 const Question = require("../models/question");
 const Solution = require("../models/solution");
 const TextAnswer = require("../models/textAnswer");
+const calculateStringSimilarityScore = require("../utils/calculateQuestionScore");
 
 async function getSolutionsByExamId(req, res) {
   const examId = req.params.examId;
@@ -32,6 +33,7 @@ async function getSolutionsByExamId(req, res) {
 const getAccumulatedSolution = async (req, res) => {
   try {
     const solution_id = req.query.solutionId;
+    let totalExamScore = 0;
 
     const solution = await Solution.findOne({
       where: { id: solution_id },
@@ -57,6 +59,10 @@ const getAccumulatedSolution = async (req, res) => {
         where: { mcq_id: mcq.id, solution_id: solution.id },
       });
       mcq.dataValues.userAnswer = mcqAnswer.submitted_option;
+      mcq.dataValues.obtainedScore =
+        mcq.userAnswer === mcq.correct_answer ? mcq.max_score : 0;
+      if (mcq.userAnswer === mcq.correct_answer)
+        totalExamScore += Number(mcq.max_score);
     }
 
     const textQuestions = await Question.findAll({
@@ -68,9 +74,21 @@ const getAccumulatedSolution = async (req, res) => {
         where: { question_id: textQuestion.id, solution_id: solution.id },
       });
       textQuestion.dataValues.userAnswer = textAnswer.submitted_answer;
+      textQuestion.dataValues.obtainedScore = calculateStringSimilarityScore(
+        textQuestion.correct_answer,
+        textAnswer.submitted_answer,
+        textQuestion.max_score
+      );
+      totalExamScore += Number(
+        calculateStringSimilarityScore(
+          textQuestion.correct_answer,
+          textAnswer.submitted_answer,
+          textQuestion.max_score
+        )
+      );
     }
 
-    return res.status(200).json({ mcqs, textQuestions });
+    return res.status(200).json({ mcqs, textQuestions, totalExamScore });
   } catch (error) {
     console.error("Error retrieving solution:", error);
     return res.status(500).json({ message: "Internal server error" });

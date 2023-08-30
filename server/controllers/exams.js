@@ -5,6 +5,9 @@ const MCQ = require("../models/mcq");
 const TextQuestion = require("../models/question");
 const Teacher = require("../models/teacher");
 const MCQOptions = require("../models/mcq_options");
+const jwt = require("jsonwebtoken");
+
+const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
 async function getPaginatedActiveExams(req, res) {
   const page = parseInt(req.query.page) || 1;
@@ -59,12 +62,13 @@ async function getPaginatedExams(req, res) {
 }
 
 async function createExamWithQuestions(req, res) {
-  const { creatorId, startTime, endTime, subject, textQuestions, mcqs } =
-    req.body;
+  const { startTime, endTime, subject, textQuestions, mcqs } = req.body;
 
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, SECRET_KEY);
     const createdExam = await Exam.create({
-      creator_id: creatorId,
+      creator_id: decodedToken.teacherId,
       start_time: startTime,
       end_time: endTime,
       subject,

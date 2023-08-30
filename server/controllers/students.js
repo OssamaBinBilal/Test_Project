@@ -5,14 +5,27 @@ const { UniqueConstraintError } = require("sequelize");
 const Solution = require("../models/solution");
 const MCQAnswer = require("../models/mcqAnswer");
 const TextAnswer = require("../models/textAnswer");
+const fs = require("fs");
 
 const SECRET_KEY = "@#$%^&*()_-+=<>?";
+
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: "ducsdp8ue",
+  api_key: "218115869298916",
+  api_secret: "iJr_bVNF0o75XsQmMZC8FofrZPg",
+});
 
 async function createStudent(req, res) {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    console.log(req.body);
+    const result = await cloudinary.uploader.upload(req.file.path);
+
+    console.log("\n\nHERE IS THE IMAGE URL\n\n", result.secure_url);
+
+    fs.unlinkSync(req.file.path);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const createdStudent = await Student.create({
@@ -20,6 +33,7 @@ async function createStudent(req, res) {
       last_name: lastName,
       email,
       password: hashedPassword,
+      imageUrl: result.secure_url,
     });
 
     res.status(201).json({

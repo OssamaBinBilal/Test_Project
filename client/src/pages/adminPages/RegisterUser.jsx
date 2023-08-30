@@ -15,6 +15,12 @@ const RegisterUser = () => {
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   const [type, setType] = useState(type1);
   const toggleType = () => {
     type === type1 ? setType(type2) : setType(type1);
@@ -52,7 +58,7 @@ const RegisterUser = () => {
     }
 
     if (type === "Student") {
-      createStudent(firstname, lastname, email, password)
+      createStudent(firstname, lastname, email, password, selectedFile)
         .then((response) => console.log(response))
         .catch((e) => {
           if (e.response.status === 403) {
@@ -94,6 +100,10 @@ const RegisterUser = () => {
         currentType={type}
         toggleType={toggleType}
       />
+
+      {type === "Student" && (
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+      )}
       <Button onClick={handleSubmit}>Submit</Button>
     </div>
   );

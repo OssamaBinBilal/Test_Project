@@ -34,6 +34,9 @@ const SolutionMCQ = ({ passedKey, mcq }) => {
           {mcq.correct_answer}
         </span>
       </Typography>
+      <Typography sx={{ mt: 3, fontWeight: "bold" }}>
+        Score: {mcq.obtainedScore} / {mcq.max_score}
+      </Typography>
     </Box>
   );
 };

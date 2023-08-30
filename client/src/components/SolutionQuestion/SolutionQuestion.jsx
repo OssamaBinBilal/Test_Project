@@ -18,6 +18,9 @@ const SolutionQuestion = ({ passedKey, question }) => {
           {question.correct_answer}
         </Typography>
       </p>
+      <Typography sx={{ mt: 3, fontWeight: "bold" }}>
+        Score: {question.obtainedScore} / {question.max_score}
+      </Typography>
     </Box>
   );
 };

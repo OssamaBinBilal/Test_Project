@@ -53,26 +53,30 @@ export const getExams = async (page, pageSize) => {
   }
 };
 
-export const createStudent = async (firstName, lastName, email, password) => {
+export const createStudent = async (
+  firstName,
+  lastName,
+  email,
+  password,
+  image
+) => {
   try {
-    let data = JSON.stringify({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+    let data = new FormData();
+    data.append("image", image);
+    data.append("firstName", firstName);
+    data.append("lastName", lastName);
+    data.append("email", email);
+    data.append("password", password);
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
       url: `${BASE_URL}/admin/create-student`,
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       data: data,
     };
-
     const response = await axios.request(config);
     return response;
   } catch (e) {
