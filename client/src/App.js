@@ -33,17 +33,20 @@ import StudentSolution from "./pages/studentPages/Solution";
 import TeacherSolutions from "./pages/teacherPages/Solutions";
 import TeacherExamsList from "./pages/teacherPages/Exams";
 import TeacherSolution from "./pages/teacherPages/Solution";
+import Logout from "./pages/Logout";
+import Home from "./pages/Home";
 
 //convert all components to arrow
 //single file to index.js
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CustomizableProvider>
-        <UserProvider>
-          <Router>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CustomizableProvider>
+          <UserProvider>
             <Routes>
+              <Route path="/" element={<Home />} />
               <Route path="/admin">
                 <Route
                   path="login"
@@ -246,12 +249,13 @@ function App() {
                   }
                 />
               </Route>
+              <Route path="/logout" element={<Logout />} />
               <Route path="*" element={<>This is an invalid route</>} />
             </Routes>
-          </Router>
-        </UserProvider>
-      </CustomizableProvider>
-    </ThemeProvider>
+          </UserProvider>
+        </CustomizableProvider>
+      </ThemeProvider>
+    </Router>
   );
 }
 

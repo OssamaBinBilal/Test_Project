@@ -14,6 +14,11 @@ export const studentSidebarItems = [
         icon: <InboxIcon />,
         to: "/student/exams",
       },
+      {
+        name: "logout",
+        icon: <InboxIcon />,
+        to: "/logout",
+      },
     ],
   },
 ];
