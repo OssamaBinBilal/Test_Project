@@ -168,10 +168,50 @@ async function getExamQuestions(req, res) {
   }
 }
 
+async function getExamsForTeacher(req, res) {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "Authorization token missing" });
+  }
+
+  const token = req.headers.authorization.split(" ")[1];
+
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  try {
+    const decodedToken = jwt.verify(token, SECRET_KEY);
+    const teacherId = decodedToken.teacherId;
+    const teacher = await Teacher.findByPk(teacherId);
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    const exams = await Exam.findAll({
+      where: {
+        creator_id: teacherId,
+      },
+      offset: (page - 1) * limit,
+      limit: limit,
+    });
+
+    const totalCount = await Exam.count({
+      where: {
+        creator_id: teacherId,
+      },
+    });
+
+    res.status(200).json({ exams, totalCount });
+  } catch (error) {
+    console.error("Error retrieving exams:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   getPaginatedActiveExams,
   createExamWithQuestions,
   getPaginatedExams,
   updateExamStatus,
   getExamQuestions,
+  getExamsForTeacher,
 };

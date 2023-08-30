@@ -1,10 +1,15 @@
+const Exam = require("../models/exam");
 const MCQ = require("../models/mcq");
 const MCQAnswer = require("../models/mcqAnswer");
 const MCQOptions = require("../models/mcq_options");
 const Question = require("../models/question");
 const Solution = require("../models/solution");
+const Teacher = require("../models/teacher");
 const TextAnswer = require("../models/textAnswer");
+const jwt = require("jsonwebtoken");
 const calculateStringSimilarityScore = require("../utils/calculateQuestionScore");
+
+const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
 async function getSolutionsByExamId(req, res) {
   const examId = req.params.examId;
@@ -95,7 +100,44 @@ const getAccumulatedSolution = async (req, res) => {
   }
 };
 
+const getSolutions = async (req, res) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "Authorization token missing" });
+  }
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, SECRET_KEY);
+
+    const teacherId = decodedToken.teacherId;
+
+    const teacher = await Teacher.findByPk(teacherId);
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    const teacherExams = await Exam.findAll({
+      where: {
+        creator_id: teacherId,
+      },
+      attributes: ["id"],
+    });
+
+    const solutions = await Solution.findAll({
+      where: {
+        exam_id: teacherExams.map((exam) => exam.id),
+      },
+    });
+
+    res.status(200).json({ solutions });
+  } catch (error) {
+    console.error("Error retrieving solutions:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   getSolutionsByExamId,
+  getSolutions,
   getAccumulatedSolution,
 };

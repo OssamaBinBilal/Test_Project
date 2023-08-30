@@ -14,6 +14,11 @@ export const teacherSidebarItems = [
         icon: <InboxIcon />,
         to: "/teacher/create-exam",
       },
+      {
+        name: "Exams",
+        icon: <InboxIcon />,
+        to: "/teacher/exams",
+      },
     ],
   },
 ];

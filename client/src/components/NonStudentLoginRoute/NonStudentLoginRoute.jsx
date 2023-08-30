@@ -20,6 +20,7 @@ const NonStudentLoginRoute = ({ children }) => {
         setIsValidToken(false);
         console.log(e);
       });
+    //use finally instead
   }, []);
 
   return (

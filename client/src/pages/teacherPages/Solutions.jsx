@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import { getSolutionsByExam, getTeachers } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate, useParams } from "react-router-dom";
-import _columns from "../../handlers/_solutionColumns";
+import { getSolutionsByExam } from "../../apis/teacher/teacher";
+import useSolutionColumns from "../../handlers/_solutionColumns";
 
 const ViewSolutions = () => {
   const [solutions, setSolutions] = useState([]);
@@ -12,6 +12,8 @@ const ViewSolutions = () => {
   const [totalItems, setTotalItems] = useState(1);
 
   const { examId } = useParams();
+
+  const _columns = useSolutionColumns("teacher");
 
   const itemsPerPage = 10;
 

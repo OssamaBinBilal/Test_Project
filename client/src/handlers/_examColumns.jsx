@@ -5,10 +5,7 @@ import { Button, Typography } from "@mui/material";
 import { updateExamStatus } from "../apis/admin/admin";
 import { Link } from "react-router-dom";
 
-const useExamColumns = (
-  displayUpdateStatusColumn,
-  retrieveExams = () => {}
-) => {
+const useExamColumns = (role, retrieveExams = () => {}) => {
   const getColorFromStatus = (status) => {
     if (status === "approved") return "success";
     else if (status === "rejected") return "error";
@@ -127,7 +124,11 @@ const useExamColumns = (
         >
           <Link
             style={{ textDecoration: "none", color: "white" }}
-            to={`/admin/solutions/${params.row.id}`}
+            to={
+              role === "admin"
+                ? `/admin/solutions/${params.row.id}`
+                : `/teacher/solutions/${params.row.id}`
+            }
           >
             View Solutions
           </Link>
@@ -136,9 +137,10 @@ const useExamColumns = (
     ),
   };
 
-  return displayUpdateStatusColumn === "admin"
-    ? [...staticColumns, updateStatusColumn, viewSolutionsColumn]
-    : [...staticColumns, attemptExamColumn];
+  if (role === "admin")
+    return [...staticColumns, updateStatusColumn, viewSolutionsColumn];
+  else if (role === "student") return [...staticColumns, attemptExamColumn];
+  else if (role === "teacher") return [...staticColumns, viewSolutionsColumn];
 };
 
 export default useExamColumns;

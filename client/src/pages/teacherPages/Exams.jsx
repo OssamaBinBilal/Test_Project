@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import { getSolutionsByExam, getTeachers } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
-import { useNavigate, useParams } from "react-router-dom";
-import _columns from "../../handlers/_solutionColumns";
+import useExamColumns from "../../handlers/_examColumns";
+import { getExamsAgainstTeachers } from "../../apis/teacher/teacher";
 
-const ViewSolutions = () => {
-  const [solutions, setSolutions] = useState([]);
+const ExamsList = () => {
+  const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-
-  const { examId } = useParams();
+  const _columns = useExamColumns("teacher");
 
   const itemsPerPage = 10;
 
@@ -20,12 +18,14 @@ const ViewSolutions = () => {
   };
 
   useEffect(() => {
-    getSolutionsByExam(examId)
+    getExamsAgainstTeachers(currentPage, itemsPerPage)
       .then((response) => {
-        setSolutions(response.data.solutions);
+        setExams(response.data.exams);
         setTotalItems(response.data.totalCount);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e.response.data.error);
+      });
   }, [currentPage]);
 
   return (
@@ -34,8 +34,8 @@ const ViewSolutions = () => {
         <DataGrid
           sx={{ border: "none" }}
           rowHeight={75}
-          rows={solutions}
-          columns={_columns}
+          rows={exams}
+          columns={[..._columns]}
           hideFooter
         />
       </Box>
@@ -49,4 +49,4 @@ const ViewSolutions = () => {
   );
 };
 
-export default ViewSolutions;
+export default ExamsList;

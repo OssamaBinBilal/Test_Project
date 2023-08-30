@@ -30,6 +30,12 @@ import NonStudentLoginRoute from "./components/NonStudentLoginRoute/NonStudentLo
 import ViewSolutions from "./pages/adminPages/ViewSolutions";
 import AdminSolution from "./pages/adminPages/Solution";
 import StudentSolution from "./pages/studentPages/Solution";
+import TeacherSolutions from "./pages/teacherPages/Solutions";
+import TeacherExamsList from "./pages/teacherPages/Exams";
+import TeacherSolution from "./pages/teacherPages/Solution";
+
+//convert all components to arrow
+//single file to index.js
 
 function App() {
   return (
@@ -138,6 +144,16 @@ function App() {
                   }
                 />
                 <Route
+                  path="exams"
+                  element={
+                    <ProtectedTeacherRoute>
+                      <SideNavLayout sidebarItems={teacherSidebarItems}>
+                        <TeacherExamsList />
+                      </SideNavLayout>
+                    </ProtectedTeacherRoute>
+                  }
+                />
+                <Route
                   path=""
                   element={
                     <ProtectedTeacherRoute>
@@ -148,11 +164,31 @@ function App() {
                   }
                 />
                 <Route
+                  path="solution/:solutionId"
+                  element={
+                    <ProtectedTeacherRoute>
+                      <SideNavLayout sidebarItems={teacherSidebarItems}>
+                        <TeacherSolution />
+                      </SideNavLayout>
+                    </ProtectedTeacherRoute>
+                  }
+                />
+                <Route
                   path="create-exam"
                   element={
                     <ProtectedTeacherRoute>
                       <SideNavLayout sidebarItems={teacherSidebarItems}>
                         <CreateExam />
+                      </SideNavLayout>
+                    </ProtectedTeacherRoute>
+                  }
+                />
+                <Route
+                  path="solutions/:examId"
+                  element={
+                    <ProtectedTeacherRoute>
+                      <SideNavLayout sidebarItems={teacherSidebarItems}>
+                        <TeacherSolutions />
                       </SideNavLayout>
                     </ProtectedTeacherRoute>
                   }

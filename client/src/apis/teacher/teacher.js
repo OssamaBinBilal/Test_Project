@@ -86,3 +86,72 @@ export const createExam = async (
     throw e;
   }
 };
+
+export const getExamsAgainstTeachers = async (page, limit) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/teacher/get-exams?page=${page}&limit=${limit}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getSolutionsByExam = async (id, page, pageSize) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/teacher/exam/${id}/solutions?page=${1}&pageSize=${pageSize}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getSolutionAgainstTeachers = async () => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/teacher/get-solutions`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getAccumulatedSolution = async (id) => {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/teacher/accumulated-solution?solutionId=${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    const response = axios.request(config);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
