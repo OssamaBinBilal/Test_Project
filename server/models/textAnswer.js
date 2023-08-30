@@ -30,10 +30,6 @@ const TextAnswer = sequelize.define("TextAnswer", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  obtained_score: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
 });
 
 module.exports = TextAnswer;
