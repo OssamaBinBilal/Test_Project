@@ -45,7 +45,14 @@ export const validateToken = async (token) => {
   }
 };
 
-export const createExam = async (mcqs, questions) => {
+export const createExam = async (
+  mcqs,
+  questions,
+  startDate,
+  expireDate,
+  startTime,
+  expireTime
+) => {
   const formattedMCQs = mcqs.map((mcq) => {
     const convertedOptions = mcq.options.map((optionText) => ({ optionText }));
     return {
@@ -56,7 +63,7 @@ export const createExam = async (mcqs, questions) => {
 
   let data = JSON.stringify({
     startTime: "2023-08-01T10:00:00Z",
-    endTime: "2023-08-30T12:00:00Z",
+    endTime: "2023-09-01T12:00:00Z",
     subject: "Sample Exam 1",
     textQuestions: questions,
     mcqs: formattedMCQs,
