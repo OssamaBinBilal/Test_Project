@@ -3,8 +3,6 @@ import axios from "axios";
 const BASE_URL = "http://localhost:4000";
 
 export const login = async (email, password) => {
-  console.log("logging in with", email, password);
-
   try {
     let data = JSON.stringify({
       email,

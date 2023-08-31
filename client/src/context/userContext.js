@@ -11,11 +11,6 @@ const UserProvider = ({ children }) => {
     setToken(token);
     localStorage.setItem("token", token);
   };
-
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
-
   const logout = (token) => {
     localStorage.setItem("token", token);
     setToken(null);

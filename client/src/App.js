@@ -35,6 +35,7 @@ import TeacherExamsList from "./pages/teacherPages/Exams";
 import TeacherSolution from "./pages/teacherPages/Solution";
 import Logout from "./pages/Logout";
 import Home from "./pages/Home";
+import { SnackbarProvider } from "./context/useSnackbar";
 
 //convert all components to arrow
 //single file to index.js
@@ -43,217 +44,219 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <CustomizableProvider>
-          <UserProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/admin">
-                <Route
-                  path="login"
-                  element={
-                    <NonAdminLoginRoute>
-                      <AdminLogin />
-                    </NonAdminLoginRoute>
-                  }
-                />
-                <Route
-                  path=""
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <AdminDashboard />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="register-user"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <RegisterUser />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="students"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <StudentList />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="teachers"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <TeacherList />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="exams"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <ExamList />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="solutions/:examId"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <ViewSolutions />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="solution/:solutionId"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <AdminSolution />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="questionnaires"
-                  element={
-                    <ProtectedAdminRoute>
-                      <SideNavLayout sidebarItems={adminSidebarItems}>
-                        <QuestionnaireList />
-                      </SideNavLayout>
-                    </ProtectedAdminRoute>
-                  }
-                />
-              </Route>
-              <Route path="/teacher">
-                <Route
-                  path="login"
-                  element={
-                    <NonTeacherLoginRoute>
-                      <TeacherLogin />
-                    </NonTeacherLoginRoute>
-                  }
-                />
-                <Route
-                  path="exams"
-                  element={
-                    <ProtectedTeacherRoute>
-                      <SideNavLayout sidebarItems={teacherSidebarItems}>
-                        <TeacherExamsList />
-                      </SideNavLayout>
-                    </ProtectedTeacherRoute>
-                  }
-                />
-                <Route
-                  path=""
-                  element={
-                    <ProtectedTeacherRoute>
-                      <SideNavLayout sidebarItems={teacherSidebarItems}>
-                        <TeacherDashboard />
-                      </SideNavLayout>
-                    </ProtectedTeacherRoute>
-                  }
-                />
-                <Route
-                  path="solution/:solutionId"
-                  element={
-                    <ProtectedTeacherRoute>
-                      <SideNavLayout sidebarItems={teacherSidebarItems}>
-                        <TeacherSolution />
-                      </SideNavLayout>
-                    </ProtectedTeacherRoute>
-                  }
-                />
-                <Route
-                  path="create-exam"
-                  element={
-                    <ProtectedTeacherRoute>
-                      <SideNavLayout sidebarItems={teacherSidebarItems}>
-                        <CreateExam />
-                      </SideNavLayout>
-                    </ProtectedTeacherRoute>
-                  }
-                />
-                <Route
-                  path="solutions/:examId"
-                  element={
-                    <ProtectedTeacherRoute>
-                      <SideNavLayout sidebarItems={teacherSidebarItems}>
-                        <TeacherSolutions />
-                      </SideNavLayout>
-                    </ProtectedTeacherRoute>
-                  }
-                />
-                <Route path="questionnaires" element={<>Questionnaires</>} />
-                <Route path="solutions" element={<>Questionnaires</>} />
-              </Route>
-              <Route path="/student">
-                <Route
-                  path="login"
-                  element={
-                    <NonStudentLoginRoute>
-                      <StudentLogin />
-                    </NonStudentLoginRoute>
-                  }
-                />
-                <Route
-                  path=""
-                  element={
-                    <ProtectedStudentRoute>
-                      <SideNavLayout sidebarItems={studentSidebarItems}>
-                        <StudentDashboard />
-                      </SideNavLayout>
-                    </ProtectedStudentRoute>
-                  }
-                />
-                <Route
-                  path="solution/:solutionId"
-                  element={
-                    <ProtectedStudentRoute>
-                      <SideNavLayout sidebarItems={studentSidebarItems}>
-                        <StudentSolution />
-                      </SideNavLayout>
-                    </ProtectedStudentRoute>
-                  }
-                />
-                <Route
-                  path="exams"
-                  element={
-                    <ProtectedStudentRoute>
-                      <SideNavLayout sidebarItems={studentSidebarItems}>
-                        <StudentExams />
-                      </SideNavLayout>
-                    </ProtectedStudentRoute>
-                  }
-                />
-                <Route
-                  path="attempt/exam/:id"
-                  element={
-                    <ProtectedStudentRoute>
-                      <SideNavLayout sidebarItems={studentSidebarItems}>
-                        <AttemptExam />
-                      </SideNavLayout>
-                    </ProtectedStudentRoute>
-                  }
-                />
-              </Route>
-              <Route path="/logout" element={<Logout />} />
-              <Route path="*" element={<>This is an invalid route</>} />
-            </Routes>
-          </UserProvider>
-        </CustomizableProvider>
+        <SnackbarProvider>
+          <CustomizableProvider>
+            <UserProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/admin">
+                  <Route
+                    path="login"
+                    element={
+                      <NonAdminLoginRoute>
+                        <AdminLogin />
+                      </NonAdminLoginRoute>
+                    }
+                  />
+                  <Route
+                    path=""
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <AdminDashboard />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="register-user"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <RegisterUser />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="students"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <StudentList />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="teachers"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <TeacherList />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="exams"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <ExamList />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="solutions/:examId"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <ViewSolutions />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="solution/:solutionId"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <AdminSolution />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="questionnaires"
+                    element={
+                      <ProtectedAdminRoute>
+                        <SideNavLayout sidebarItems={adminSidebarItems}>
+                          <QuestionnaireList />
+                        </SideNavLayout>
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                </Route>
+                <Route path="/teacher">
+                  <Route
+                    path="login"
+                    element={
+                      <NonTeacherLoginRoute>
+                        <TeacherLogin />
+                      </NonTeacherLoginRoute>
+                    }
+                  />
+                  <Route
+                    path="exams"
+                    element={
+                      <ProtectedTeacherRoute>
+                        <SideNavLayout sidebarItems={teacherSidebarItems}>
+                          <TeacherExamsList />
+                        </SideNavLayout>
+                      </ProtectedTeacherRoute>
+                    }
+                  />
+                  <Route
+                    path=""
+                    element={
+                      <ProtectedTeacherRoute>
+                        <SideNavLayout sidebarItems={teacherSidebarItems}>
+                          <TeacherDashboard />
+                        </SideNavLayout>
+                      </ProtectedTeacherRoute>
+                    }
+                  />
+                  <Route
+                    path="solution/:solutionId"
+                    element={
+                      <ProtectedTeacherRoute>
+                        <SideNavLayout sidebarItems={teacherSidebarItems}>
+                          <TeacherSolution />
+                        </SideNavLayout>
+                      </ProtectedTeacherRoute>
+                    }
+                  />
+                  <Route
+                    path="create-exam"
+                    element={
+                      <ProtectedTeacherRoute>
+                        <SideNavLayout sidebarItems={teacherSidebarItems}>
+                          <CreateExam />
+                        </SideNavLayout>
+                      </ProtectedTeacherRoute>
+                    }
+                  />
+                  <Route
+                    path="solutions/:examId"
+                    element={
+                      <ProtectedTeacherRoute>
+                        <SideNavLayout sidebarItems={teacherSidebarItems}>
+                          <TeacherSolutions />
+                        </SideNavLayout>
+                      </ProtectedTeacherRoute>
+                    }
+                  />
+                  <Route path="questionnaires" element={<>Questionnaires</>} />
+                  <Route path="solutions" element={<>Questionnaires</>} />
+                </Route>
+                <Route path="/student">
+                  <Route
+                    path="login"
+                    element={
+                      <NonStudentLoginRoute>
+                        <StudentLogin />
+                      </NonStudentLoginRoute>
+                    }
+                  />
+                  <Route
+                    path=""
+                    element={
+                      <ProtectedStudentRoute>
+                        <SideNavLayout sidebarItems={studentSidebarItems}>
+                          <StudentDashboard />
+                        </SideNavLayout>
+                      </ProtectedStudentRoute>
+                    }
+                  />
+                  <Route
+                    path="solution/:solutionId"
+                    element={
+                      <ProtectedStudentRoute>
+                        <SideNavLayout sidebarItems={studentSidebarItems}>
+                          <StudentSolution />
+                        </SideNavLayout>
+                      </ProtectedStudentRoute>
+                    }
+                  />
+                  <Route
+                    path="exams"
+                    element={
+                      <ProtectedStudentRoute>
+                        <SideNavLayout sidebarItems={studentSidebarItems}>
+                          <StudentExams />
+                        </SideNavLayout>
+                      </ProtectedStudentRoute>
+                    }
+                  />
+                  <Route
+                    path="attempt/exam/:id"
+                    element={
+                      <ProtectedStudentRoute>
+                        <SideNavLayout sidebarItems={studentSidebarItems}>
+                          <AttemptExam />
+                        </SideNavLayout>
+                      </ProtectedStudentRoute>
+                    }
+                  />
+                </Route>
+                <Route path="/logout" element={<Logout />} />
+                <Route path="*" element={<>This is an invalid route</>} />
+              </Routes>
+            </UserProvider>
+          </CustomizableProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </Router>
   );

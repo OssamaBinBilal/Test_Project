@@ -13,9 +13,7 @@ const Solution = () => {
   useEffect(() => {
     getAccumulatedSolution(solutionId)
       .then((response) => {
-        console.log(response.data);
         setMcqs(response.data.mcqs);
-        console.log(response.data.textQuestions);
         setQuestion(response.data.textQuestions);
       })
       .catch((e) => console.log(e));

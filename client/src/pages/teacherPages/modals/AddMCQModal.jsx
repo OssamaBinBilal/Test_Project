@@ -4,6 +4,7 @@ import Input from "../../../components/Input/Input";
 import Chips from "../../../components/Chips/Chips";
 import { Box } from "@mui/material";
 import { Button } from "@mui/material";
+import { useSnackbar } from "../../../context/useSnackbar";
 
 const AddMCQModal = ({ open, setOpen, idToAssign, addMCQ }) => {
   const textRef = useRef(null);
@@ -17,16 +18,18 @@ const AddMCQModal = ({ open, setOpen, idToAssign, addMCQ }) => {
     );
   };
 
+  const { displaySnackbar } = useSnackbar();
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       if (enterOptionRef.current.value === "") {
-        console.log("Pleas enter something");
-        return;
-      } else if (possibleOptions.length === 4) {
-        console.log("You can add a maximum of 4 options");
+        displaySnackbar("Please enter something for an option", "error");
         return;
       } else if (possibleOptions.includes(enterOptionRef.current.value)) {
-        console.log("Option already included");
+        displaySnackbar("Option already included", "error");
+        return;
+      } else if (possibleOptions.length === 4) {
+        displaySnackbar("You can add a maximum of 4 options", "error");
         return;
       } else {
         setPossibleOptions([...possibleOptions, enterOptionRef.current.value]);
@@ -41,13 +44,13 @@ const AddMCQModal = ({ open, setOpen, idToAssign, addMCQ }) => {
 
   const handleSubmitMCQ = () => {
     if (textRef.current.value === "") {
-      console.log("Please provide a question statement");
+      displaySnackbar("Please provide a question statement", "error");
       return;
     } else if (possibleOptions.length < 4) {
-      console.log("Please provide 4 possible options");
+      displaySnackbar("Please provide 4 possible options", "error");
       return;
     } else if (!possibleOptions.includes(correctOption)) {
-      console.log("Please select an option as correct option");
+      displaySnackbar("Please select an option as correct option", "error");
       return;
     }
 

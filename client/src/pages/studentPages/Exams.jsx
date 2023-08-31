@@ -20,7 +20,6 @@ const ExamsList = () => {
   useEffect(() => {
     getActiveExams(currentPage, itemsPerPage)
       .then((response) => {
-        console.log(response.data.exams);
         setExams(response.data.exams);
         setTotalItems(response.data.total_exams);
       })

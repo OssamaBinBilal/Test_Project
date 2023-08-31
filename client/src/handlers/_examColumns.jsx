@@ -4,8 +4,11 @@ import TimerIcon from "@mui/icons-material/Timer";
 import { Button, Typography } from "@mui/material";
 import { updateExamStatus } from "../apis/admin/admin";
 import { Link } from "react-router-dom";
+import { useSnackbar } from "../context/useSnackbar";
 
 const useExamColumns = (role, retrieveExams = () => {}) => {
+  const { displaySnackbar } = useSnackbar();
+
   const getColorFromStatus = (status) => {
     if (status === "approved") return "success";
     else if (status === "rejected") return "error";
@@ -15,10 +18,12 @@ const useExamColumns = (role, retrieveExams = () => {}) => {
   const handleStatusUpdate = (id, status) => {
     updateExamStatus(id, status)
       .then((response) => {
-        console.log(response);
         retrieveExams();
+        displaySnackbar("Exam status updated", "success");
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        displaySnackbar("There was an error updating the exam status", "error")
+      );
   };
 
   const staticColumns = [
@@ -97,7 +102,7 @@ const useExamColumns = (role, retrieveExams = () => {}) => {
         <Button
           sx={{ fontWeight: "bold", textTransform: "capitalize" }}
           variant="contained"
-          onClick={() => console.log(params.row.alreadyAppearedIn)}
+          onClick={() => {}}
           disabled={params.row.alreadyAppearedIn}
         >
           <Link
@@ -121,7 +126,7 @@ const useExamColumns = (role, retrieveExams = () => {}) => {
         <Button
           sx={{ fontWeight: "bold", textTransform: "capitalize" }}
           variant="contained"
-          onClick={() => console.log()}
+          onClick={() => {}}
         >
           <Link
             style={{ textDecoration: "none", color: "white" }}

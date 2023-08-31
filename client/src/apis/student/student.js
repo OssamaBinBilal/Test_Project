@@ -33,8 +33,6 @@ export const getExamQuestions = async (id) => {
 };
 
 export const login = async (email, password) => {
-  console.log("logging in with", email, password);
-
   try {
     let data = JSON.stringify({
       email,

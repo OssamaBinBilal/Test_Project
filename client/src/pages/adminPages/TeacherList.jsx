@@ -5,11 +5,14 @@ import _columns from "../../handlers/_teacherColumns";
 import { getTeachers } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "../../context/useSnackbar";
 
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
+
+  const { displaySnackbar } = useSnackbar();
 
   const navigate = useNavigate();
 
@@ -26,9 +29,8 @@ const TeacherList = () => {
         setTotalItems(response.data.total_teachers);
       })
       .catch((e) => {
-        console.log(e.response.data.error);
+        displaySnackbar(e.response.data.error);
         if (e.response.status === 403) {
-          console.log("Your token is invalid, please log in again");
           navigate("/admin/login");
         }
       });

@@ -5,6 +5,7 @@ import _columns from "../../handlers/_studentColumns";
 import { getStudents } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "../../context/useSnackbar";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
@@ -13,6 +14,8 @@ const StudentList = () => {
   const navigate = useNavigate();
 
   const itemsPerPage = 10;
+
+  const { displaySnackbar } = useSnackbar();
 
   const handlePageChange = (e, newPage) => {
     setCurrentPage(newPage);
@@ -25,9 +28,8 @@ const StudentList = () => {
         setTotalItems(response.data.total_students);
       })
       .catch((e) => {
-        console.log(e.response.data.error);
+        displaySnackbar(e.response.data.error);
         if (e.response.status === 403) {
-          console.log("Your token is invalid, please log in again");
           navigate("/admin/login");
         }
       });

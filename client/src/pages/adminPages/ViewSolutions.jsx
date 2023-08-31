@@ -5,6 +5,7 @@ import { getSolutionsByExam, getTeachers } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate, useParams } from "react-router-dom";
 import useSolutionColumns from "../../handlers/_solutionColumns";
+import { useSnackbar } from "../../context/useSnackbar";
 
 const ViewSolutions = () => {
   const [solutions, setSolutions] = useState([]);
@@ -12,6 +13,7 @@ const ViewSolutions = () => {
   const [totalItems, setTotalItems] = useState(1);
 
   const { examId } = useParams();
+  const { displaySnackbar } = useSnackbar();
 
   const _columns = useSolutionColumns("admin");
 
@@ -24,11 +26,10 @@ const ViewSolutions = () => {
   useEffect(() => {
     getSolutionsByExam(examId)
       .then((response) => {
-        console.log(response.data.solutions);
         setSolutions(response.data.solutions);
         setTotalItems(response.data.totalCount);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => displaySnackbar(e.response.data.error));
   }, [currentPage]);
 
   return (

@@ -12,7 +12,6 @@ const sendInvitation = async (req, res) => {
   const { email } = req.body;
   const token = Math.floor(100000 + Math.random() * 900000).toString();
 
-  // Create a transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -28,15 +27,7 @@ const sendInvitation = async (req, res) => {
     text: `Hello,\n\nYou are invited to join our application. Your invitation token is: ${token}`,
   };
 
-  console.log("GONNA SEND LMAO");
-
   try {
-    // const invitation = await Invitation.create({
-    //   email,
-    //   token,
-    //   expiresAt: new Date(),
-    // });
-
     await transporter.sendMail(mailOptions);
 
     res.status(200).json({ message: "Invitation sent successfully" });

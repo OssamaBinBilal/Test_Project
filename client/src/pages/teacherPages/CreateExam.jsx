@@ -13,6 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { useSnackbar } from "../../context/useSnackbar";
 
 const CreateExam = () => {
   const [isAddMCQModalOpen, setIsAddMCQModalOpen] = useState(false);
@@ -26,6 +27,8 @@ const CreateExam = () => {
 
   const [startTime, setStartTime] = useState("");
   const [expireTime, setExpireTime] = useState("");
+
+  const { displaySnackbar } = useSnackbar();
 
   const updateCorrectAnswer = (event, id) => {
     setCurrentMCQs(
@@ -54,12 +57,48 @@ const CreateExam = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(startDate);
-    console.log(expireDate);
-    console.log(expireTime);
-    console.log(startTime);
-  }, [startDate, expireDate, expireTime, startTime]);
+  const handleSubmitExam = () => {
+    if (currentMCQs.length === 0 && currentTextQuestions.length === 0) {
+      displaySnackbar(
+        "You can't create an exam without any questions",
+        "error"
+      );
+      return;
+    }
+
+    // if (startDate === "") {
+    //   displaySnackbar("Please select a start date for your exam", "error");
+    //   return;
+    // }
+
+    // if (expireDate === "") {
+    //   displaySnackbar("Please select an end date for your exam", "error");
+    //   return;
+    // }
+
+    // if (startTime === "") {
+    //   displaySnackbar("Please select a start time for your exam", "error");
+    //   return;
+    // }
+
+    // if (expireTime === "") {
+    //   displaySnackbar("Please select an end time for your exam", "error");
+    //   return;
+    // }
+
+    createExam(
+      currentMCQs,
+      currentTextQuestions,
+      startDate,
+      expireDate,
+      startTime,
+      expireTime
+    )
+      .then((response) => displaySnackbar(response.data.message, "success"))
+      .catch((e) =>
+        displaySnackbar("An error occured while create exam", "error")
+      );
+  };
 
   return (
     <>
@@ -121,18 +160,7 @@ const CreateExam = () => {
           sx={{ ml: 2 }}
           variant="contained"
           color="success"
-          onClick={() =>
-            createExam(
-              currentMCQs,
-              currentTextQuestions,
-              startDate,
-              expireDate,
-              startTime,
-              expireTime
-            )
-              .then((response) => console.log(response))
-              .catch((e) => console.log(e))
-          }
+          onClick={handleSubmitExam}
         >
           SUBMIT EXAM
         </Button>

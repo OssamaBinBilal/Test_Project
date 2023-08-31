@@ -13,12 +13,10 @@ const ProtectedTeacherRoute = ({ children }) => {
       .then((response) => {
         setIsLoading(false);
         setIsValidToken(true);
-        console.log(response);
       })
       .catch((e) => {
         setIsLoading(false);
         setIsValidToken(false);
-        console.log(e);
       });
   }, []);
 

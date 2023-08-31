@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import Pagination from "../../components/Pagination/Pagination";
 import useExamColumns from "../../handlers/_examColumns";
 import { getExamsAgainstTeachers } from "../../apis/teacher/teacher";
+import { useSnackbar } from "../../context/useSnackbar";
 
 const ExamsList = () => {
   const [exams, setExams] = useState([]);
@@ -12,6 +13,8 @@ const ExamsList = () => {
   const _columns = useExamColumns("teacher");
 
   const itemsPerPage = 10;
+
+  const { displaySnackbar } = useSnackbar();
 
   const handlePageChange = (e, newPage) => {
     setCurrentPage(newPage);
@@ -24,7 +27,7 @@ const ExamsList = () => {
         setTotalItems(response.data.totalCount);
       })
       .catch((e) => {
-        console.log(e.response.data.error);
+        displaySnackbar(e.response.data.error);
       });
   }, [currentPage]);
 
