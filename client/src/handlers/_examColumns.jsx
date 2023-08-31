@@ -97,7 +97,8 @@ const useExamColumns = (role, retrieveExams = () => {}) => {
         <Button
           sx={{ fontWeight: "bold", textTransform: "capitalize" }}
           variant="contained"
-          onClick={() => console.log()}
+          onClick={() => console.log(params.row.alreadyAppearedIn)}
+          disabled={params.row.alreadyAppearedIn}
         >
           <Link
             style={{ textDecoration: "none", color: "white" }}

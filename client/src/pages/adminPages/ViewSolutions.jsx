@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { getSolutionsByExam, getTeachers } from "../../apis/admin/admin";
 import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate, useParams } from "react-router-dom";
-import _columns from "../../handlers/_solutionColumns";
+import useSolutionColumns from "../../handlers/_solutionColumns";
 
 const ViewSolutions = () => {
   const [solutions, setSolutions] = useState([]);
@@ -12,6 +12,8 @@ const ViewSolutions = () => {
   const [totalItems, setTotalItems] = useState(1);
 
   const { examId } = useParams();
+
+  const _columns = useSolutionColumns("admin");
 
   const itemsPerPage = 10;
 
@@ -22,6 +24,7 @@ const ViewSolutions = () => {
   useEffect(() => {
     getSolutionsByExam(examId)
       .then((response) => {
+        console.log(response.data.solutions);
         setSolutions(response.data.solutions);
         setTotalItems(response.data.totalCount);
       })

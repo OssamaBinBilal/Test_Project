@@ -6,6 +6,7 @@ const TextQuestion = require("../models/question");
 const Teacher = require("../models/teacher");
 const MCQOptions = require("../models/mcq_options");
 const jwt = require("jsonwebtoken");
+const Solution = require("../models/solution");
 
 const SECRET_KEY = "@#$%^&*()_-+=<>?";
 
@@ -13,7 +14,14 @@ async function getPaginatedActiveExams(req, res) {
   const page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const currentDate = new Date();
+
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "Authorization token missing" });
+  }
+
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, SECRET_KEY);
     const exams = await Exam.findAll({
       where: {
         status: "approved",
@@ -27,6 +35,18 @@ async function getPaginatedActiveExams(req, res) {
       offset: (page - 1) * perPage,
       limit: perPage,
     });
+
+    for (const exam of exams) {
+      const solution = await Solution.findOne({
+        where: {
+          exam_id: exam.id,
+          submitter_id: decodedToken.studentId,
+        },
+      });
+
+      exam.dataValues.alreadyAppearedIn = solution ? true : false;
+    }
+
     const total_exams = await Exam.count({
       where: {
         status: "approved",
