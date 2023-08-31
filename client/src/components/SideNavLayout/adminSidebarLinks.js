@@ -30,9 +30,9 @@ export const adminSidebarItems = [
         to: "/admin/exams",
       },
       {
-        name: "Questionnaires",
+        name: "logout",
         icon: <InboxIcon />,
-        to: "/admin/questionnaires",
+        to: "/logout",
       },
     ],
   },
